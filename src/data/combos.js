@@ -1,22 +1,26 @@
 /**
- * CATÁLOGO DE COMBOS — único lugar donde se editan productos y precios.
+ * CATÁLOGO — único lugar donde se editan categorías, productos, precios y promociones.
  *
- * Cada combo tiene:
+ * Cada producto/combo tiene:
  *  - id:        identificador único (sin espacios). Lo usan las promociones.
- *  - category:  'hamburguesas' | 'panchos' | 'choris' | 'snacks'
+ *  - category:  id de una categoría de `categories` (abajo).
  *  - name:      nombre que se muestra y que viaja en el mensaje de WhatsApp.
  *  - brand:     marca principal (etiqueta sobre la foto).
- *  - weight:    gramaje de cada unidad (opcional).
+ *  - weight:    gramaje (opcional).
  *  - description: una línea de venta.
- *  - includes:  lista de lo que trae el combo.
+ *  - includes:  lista de lo que trae el combo (opcional).
  *  - tiers:     opciones de cantidad. `qty` = unidades, `price` = precio en pesos (número, sin puntos).
- *               Si `qty` es null, el combo tiene un precio único (ej. snacks).
+ *               Si `qty` es null, tiene un precio único (ej. snacks).
+ *               Si `tiers` es null, el producto todavía no tiene precio cargado: se muestra
+ *               "Consultá precio" y el botón consulta por WhatsApp. Para ponerle precio:
+ *               tiers: [{ qty: null, price: 12345 }]
+ *  - variants:  sabores/variedades para elegir (opcional, ej. maní Landy).
  *  - unitLabel: cómo se llaman las unidades ('hamburguesas', 'panchos', 'choris').
- *  - image:     foto del combo (1200x900, .webp). Son composiciones armadas con las fotos de producto
- *               que nos pasaste (paquete + pan + aderezos). Las que todavía son recortes de flyer:
- *               Snacks N°3 (Oasis) y Choris. REEMPLAZAR cuando haya fotos.
- *               (importarlas arriba y asignarlas acá; formato .webp recomendado, ~900px de ancho).
+ *  - image:     foto (1200x900 .webp con fondo, o paquete recortado con `pack: true`).
+ *               Choris todavía usa el recorte del flyer: REEMPLAZAR cuando haya foto.
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
+ *  - addon:     agregado opcional con precio (ej. cheddar +$1.000). Ver `CHEDDAR`.
+ *  - extra:     agregado incluido destacado con sticker (ej. papas pay). Ver `PAPAS_PAY`.
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
  *
  * Precios cargados según las publicaciones vigentes de Combo Fiesta.
@@ -40,13 +44,92 @@ import snacks3 from '../assets/img/snacks-3.webp'
 import snacks4 from '../assets/img/snacks-4.webp'
 import snacks5 from '../assets/img/snacks-5.webp'
 import snacks6 from '../assets/img/snacks-6.webp'
+import landyMani from '../assets/img/landy-mani.webp'
+import catCongelados from '../assets/img/cat-congelados.webp'
+import catDulces from '../assets/img/cat-dulces.webp'
+import catSalados from '../assets/img/cat-salados.webp'
+import cheddarImg from '../assets/img/promo/cheddar.svg'
+import papasPayImg from '../assets/img/promo/papas-pay.svg'
+import glVeggies from '../assets/img/products/gl-veggies.webp'
+import glAcelga from '../assets/img/products/gl-acelga.webp'
+import glChoclo from '../assets/img/products/gl-choclo.webp'
+import glEspinaca from '../assets/img/products/gl-espinaca.webp'
+import glPrimavera from '../assets/img/products/gl-primavera.webp'
+import simplotPapas from '../assets/img/products/simplot-papas.webp'
+import swiftBocaditos from '../assets/img/products/swift-bocaditos.webp'
+import glFrutillas from '../assets/img/products/gl-frutillas.webp'
+import glFrambuesas from '../assets/img/products/gl-frambuesas.webp'
+import glArandanos from '../assets/img/products/gl-arandanos.webp'
+import glMixBerries from '../assets/img/products/gl-mixberries.webp'
+import glMoras from '../assets/img/products/gl-moras.webp'
+import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 
+/**
+ * CATEGORÍAS — el orden de este array es el orden del catálogo en la web.
+ *  - label: nombre corto (menú y pestañas). title: título grande de la sección.
+ *  - tagline: bajada de la sección. cover: imagen de portada de la categoría.
+ */
 export const categories = [
-  { id: 'hamburguesas', label: 'Hamburguesas', short: 'Burgers' },
-  { id: 'panchos', label: 'Panchos', short: 'Panchos' },
-  { id: 'choris', label: 'Choris', short: 'Choris' },
-  { id: 'snacks', label: 'Snacks', short: 'Snacks' },
+  {
+    id: 'hamburguesas',
+    label: 'Hamburguesas',
+    title: 'Combos de hamburguesas',
+    tagline: 'Medallones de las mejores marcas con pan artesanal y aderezos. Sumales cheddar por $1.000 más.',
+    cover: burgerMuneca120,
+  },
+  {
+    id: 'panchos',
+    label: 'Panchos',
+    title: 'Combos de panchos',
+    tagline: 'Salchichas, pan y aderezos para armar la panchada. Los super panchos vienen con papas pay.',
+    cover: superPanchosPaladini,
+  },
+  {
+    id: 'choris',
+    label: 'Choris',
+    title: 'Combos de choris',
+    tagline: 'Choripanes Paladini con panes y aderezos, por encargo.',
+    cover: choripan,
+  },
+  {
+    id: 'salados',
+    label: 'Salados',
+    title: 'Salados',
+    tagline: 'Combos de snacks y maní para picar en la previa.',
+    cover: catSalados,
+  },
+  {
+    id: 'congelados',
+    label: 'Congelados',
+    title: 'Congelados',
+    tagline: 'Verduras, papas y bocaditos listos para el freezer.',
+    cover: catCongelados,
+  },
+  {
+    id: 'dulces',
+    label: 'Dulces',
+    title: 'Dulces',
+    tagline: 'Frutas congeladas Green Life, listas para postres, licuados y desayunos.',
+    cover: catDulces,
+  },
 ]
+
+/** PROMO: cheddar en los combos de hamburguesas. Para cambiar el precio, editá `price`. */
+export const CHEDDAR = {
+  id: 'cheddar',
+  label: 'cheddar',
+  price: 1000,
+  image: cheddarImg, // REEMPLAZAR por foto real del cheddar si se dispone
+  tag: '¡Por $1.000 más te lo llevás con cheddar!',
+}
+
+/** PROMO: papas pay incluidas en los combos de super panchos. */
+export const PAPAS_PAY = {
+  id: 'papas-pay',
+  label: 'Papas pay',
+  image: papasPayImg, // REEMPLAZAR por foto real de las papas pay si se dispone
+  tag: '¡Ahora con papas pay!',
+}
 
 const BURGER_INCLUDES = ['Medallones', 'Pan artesanal', 'Aderezos']
 const tiers = (prices) => [12, 24, 36, 48, 60].map((qty, i) => ({ qty, price: prices[i] }))
@@ -185,10 +268,11 @@ export const combos = [
     name: 'Super Panchos Paladini +Largas',
     brand: 'Paladini',
     description: 'Salchichas Paladini +Largas con pan para super panchos.',
-    includes: ['Salchichas +Largas', 'Pan para super panchos', 'Aderezos'],
+    includes: ['Salchichas +Largas', 'Pan para super panchos', 'Aderezos', 'Papas pay'],
     unitLabel: 'panchos',
     tiers: tiers([22900, 45500, 65500, 83900, 99900]),
     image: superPanchosPaladini,
+    extra: PAPAS_PAY,
   },
   {
     id: 'super-panchos-sugarosa',
@@ -196,10 +280,11 @@ export const combos = [
     name: 'Super Panchos Sugarosa',
     brand: 'Sugarosa',
     description: 'Salchichas Sugarosa con pan para super panchos y aderezos.',
-    includes: ['Salchichas Sugarosa', 'Pan para super panchos', 'Aderezos'],
+    includes: ['Salchichas Sugarosa', 'Pan para super panchos', 'Aderezos', 'Papas pay'],
     unitLabel: 'panchos',
     tiers: tiers([16900, 33300, 48900, 61900, 73900]),
     image: superPanchosSugarosa,
+    extra: PAPAS_PAY,
   },
 
   // ─────────────── CHORIS ───────────────
@@ -223,7 +308,7 @@ export const combos = [
   // ─────────────── SNACKS ───────────────
   {
     id: 'snacks-1',
-    category: 'snacks',
+    category: 'salados',
     name: 'Combo Snacks N°1',
     brand: 'Pehuamar',
     description: 'El trío Pehuamar de siempre para picar en la previa.',
@@ -233,7 +318,7 @@ export const combos = [
   },
   {
     id: 'snacks-2',
-    category: 'snacks',
+    category: 'salados',
     name: 'Combo Snacks N°2',
     brand: 'Craker',
     description: 'Un kilo y medio de snacks Craker para compartir.',
@@ -243,7 +328,7 @@ export const combos = [
   },
   {
     id: 'snacks-3',
-    category: 'snacks',
+    category: 'salados',
     name: 'Combo Snacks N°3',
     brand: 'Oasis',
     description: 'Papas estilo americano, chizitos y palitos Oasis.',
@@ -253,7 +338,7 @@ export const combos = [
   },
   {
     id: 'snacks-4',
-    category: 'snacks',
+    category: 'salados',
     name: 'Combo Snacks N°4',
     brand: 'Craker · Landy · Orita’s',
     description: 'El combo más grande: 2,5 kg de snacks para la fiesta.',
@@ -263,7 +348,7 @@ export const combos = [
   },
   {
     id: 'snacks-5',
-    category: 'snacks',
+    category: 'salados',
     name: 'Combo Snacks N°5',
     brand: 'Craker · Landy',
     description: 'Kilo de papas acanaladas con copos de maíz y palitos.',
@@ -273,13 +358,171 @@ export const combos = [
   },
   {
     id: 'snacks-6',
-    category: 'snacks',
+    category: 'salados',
     name: 'Combo Snacks N°6',
     brand: 'Craker',
     description: 'Todo Craker: kilo de papas, chizitos y palitos.',
     includes: ['1 kg Papas Craker', '500 g Chizitos Craker', '500 g Palitos Craker'],
     tiers: [{ qty: null, price: 21900 }],
     image: snacks6,
+  },
+
+  // ─────────────── SALADOS (productos sueltos, precio a consultar) ───────────────
+  {
+    id: 'landy-mani',
+    category: 'salados',
+    name: 'Maní Crocante Landy 1 kg',
+    brand: 'Landy',
+    weight: '1 kg',
+    description: 'Maní crocante en ocho sabores. Elegí el tuyo.',
+    variants: ['Clásico', 'Chimichurri', 'Jamón', 'Queso', 'Pizza', 'Cebolla', 'Provenzal', 'Salame'],
+    tiers: null,
+    image: landyMani,
+  },
+  {
+    id: 'oasis-papas-tradicional',
+    category: 'salados',
+    name: 'Papas Fritas Oasis Corte Tradicional 700 g',
+    brand: 'Oasis',
+    weight: '700 g',
+    description: 'Bolsa grande de papas fritas corte tradicional.',
+    tiers: null,
+    image: oasisPapasTradicional,
+    pack: true,
+  },
+
+  // ─────────────── CONGELADOS (precio a consultar) ───────────────
+  {
+    id: 'swift-bocaditos-pollo',
+    category: 'congelados',
+    name: 'Bocaditos de Pollo Swift 400 g',
+    brand: 'Swift',
+    weight: '400 g',
+    description: 'Formados de carne de pollo rebozados, supercongelados.',
+    tiers: null,
+    image: swiftBocaditos,
+    pack: true,
+  },
+  {
+    id: 'simplot-papas-tradicional',
+    category: 'congelados',
+    name: 'Papas Simplot Corte Tradicional 700 g',
+    brand: 'Simplot',
+    weight: '700 g',
+    description: 'Papas prefritas supercongeladas, corte tradicional.',
+    tiers: null,
+    image: simplotPapas,
+    pack: true,
+  },
+  {
+    id: 'green-life-veggies',
+    category: 'congelados',
+    name: 'Medallones Veggies Green Life Espinaca y Pimientos',
+    brand: 'Green Life',
+    weight: '190 g',
+    description: 'Dos medallones vegetales, directo del freezer a la plancha o al horno.',
+    tiers: null,
+    image: glVeggies,
+    pack: true,
+  },
+  {
+    id: 'green-life-espinaca',
+    category: 'congelados',
+    name: 'Espinaca Green Life 550 g',
+    brand: 'Green Life',
+    weight: '550 g',
+    description: 'Sin conservantes, fuente de fibra y bajo en sodio.',
+    tiers: null,
+    image: glEspinaca,
+    pack: true,
+  },
+  {
+    id: 'green-life-acelga',
+    category: 'congelados',
+    name: 'Acelga Green Life 500 g',
+    brand: 'Green Life',
+    weight: '500 g',
+    description: 'Sin conservantes y fuente de fibra.',
+    tiers: null,
+    image: glAcelga,
+    pack: true,
+  },
+  {
+    id: 'green-life-choclo',
+    category: 'congelados',
+    name: 'Choclo Green Life 350 g',
+    brand: 'Green Life',
+    weight: '350 g',
+    description: 'Choclo amarillo en granos. Sin conservantes y bajo en sodio.',
+    tiers: null,
+    image: glChoclo,
+    pack: true,
+  },
+  {
+    id: 'green-life-mix-primavera',
+    category: 'congelados',
+    name: 'Mix Primavera Green Life 350 g',
+    brand: 'Green Life',
+    weight: '350 g',
+    description: 'Arvejas, chauchas, choclo y zanahorias.',
+    tiers: null,
+    image: glPrimavera,
+    pack: true,
+  },
+
+  // ─────────────── DULCES (frutas congeladas, precio a consultar) ───────────────
+  {
+    id: 'green-life-frutillas',
+    category: 'dulces',
+    name: 'Frutillas Green Life 550 g',
+    brand: 'Green Life',
+    weight: '550 g',
+    description: 'Frutillas enteras, listas para consumir.',
+    tiers: null,
+    image: glFrutillas,
+    pack: true,
+  },
+  {
+    id: 'green-life-frambuesas',
+    category: 'dulces',
+    name: 'Frambuesas Green Life 400 g',
+    brand: 'Green Life',
+    weight: '400 g',
+    description: 'Frambuesas enteras, listas para consumir.',
+    tiers: null,
+    image: glFrambuesas,
+    pack: true,
+  },
+  {
+    id: 'green-life-mix-berries',
+    category: 'dulces',
+    name: 'Mix Berries Green Life 550 g',
+    brand: 'Green Life',
+    weight: '550 g',
+    description: 'Frutillas, moras y frambuesas enteras.',
+    tiers: null,
+    image: glMixBerries,
+    pack: true,
+  },
+  {
+    id: 'green-life-arandanos',
+    category: 'dulces',
+    name: 'Arándanos Green Life',
+    brand: 'Green Life',
+    description: 'Arándanos listos para consumir.',
+    tiers: null,
+    image: glArandanos, // REEMPLAZAR: la foto disponible es chica
+    pack: true,
+  },
+  {
+    id: 'green-life-moras',
+    category: 'dulces',
+    name: 'Moras Green Life',
+    brand: 'Green Life',
+    description: 'Moras listas para consumir.',
+    tiers: null,
+    image: glMoras, // REEMPLAZAR: la foto disponible es chica
+    pack: true,
   },
 ]
 
@@ -318,4 +561,7 @@ export const promotions = [
   },
 ]
 
+for (const c of combos) if (c.category === 'hamburguesas') c.addon = CHEDDAR
+
 export const getCombo = (id) => combos.find((c) => c.id === id)
+export const byCategory = (id) => combos.filter((c) => c.category === id)

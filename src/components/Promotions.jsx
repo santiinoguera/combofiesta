@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import PromoBanners from './PromoBanners'
 import { ArrowIcon, WhatsAppIcon, ClockIcon } from './Icons'
 import { promotions, getCombo } from '../data/combos'
 import { formatPrice } from '../lib/format'
@@ -37,7 +38,7 @@ function FeaturedPromo({ p }) {
           {p.tier.qty && <p className="text-sm font-bold tracking-[0.16em] text-white/80 uppercase">Combo x{p.tier.qty}</p>}
           <p className="display text-6xl sm:text-7xl">{formatPrice(p.tier.price)}</p>
         </div>
-        <a href={comboLink(p.combo, p.tier)} target="_blank" rel="noopener noreferrer" className="btn btn-white !py-4">
+        <a href={comboLink(p.combo, { tier: p.tier })} target="_blank" rel="noopener noreferrer" className="btn btn-white !py-4">
           <WhatsAppIcon className="size-5 text-[#1faa53]" />
           Lo quiero
           <span className="sr-only">: {p.combo.name}</span>
@@ -70,7 +71,7 @@ function PromoTile({ p, tone }) {
             <span className="display text-5xl text-rojo">{formatPrice(p.tier.price)}</span>
           </p>
           <a
-            href={comboLink(p.combo, p.tier)}
+            href={comboLink(p.combo, { tier: p.tier })}
             target="_blank"
             rel="noopener noreferrer"
             className="grid size-14 shrink-0 place-items-center rounded-full bg-navy text-white transition-[transform,background-color] duration-300 group-hover:-rotate-45 hover:bg-rojo"
@@ -123,7 +124,11 @@ export default function Promotions() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-12 lg:gap-6">
+        <div className="mt-12">
+          <PromoBanners />
+        </div>
+
+        <div className="mt-6 grid gap-5 lg:grid-cols-12 lg:gap-6">
           <Reveal className="lg:col-span-6 lg:row-span-3">
             <FeaturedPromo p={featured} />
           </Reveal>

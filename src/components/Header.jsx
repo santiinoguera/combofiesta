@@ -6,7 +6,7 @@ import { site } from '../data/site'
 
 export const NAV = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#combos', label: 'Nuestros combos' },
+  { href: '#catalogo', label: 'Catálogo' },
   { href: '#promociones', label: 'Promociones' },
   { href: '#contacto', label: 'Contacto' },
 ]

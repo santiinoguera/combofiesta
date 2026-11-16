@@ -18,7 +18,9 @@ npm run preview  # sirve /dist localmente
 | Qué | Archivo |
 | --- | --- |
 | WhatsApp, Instagram, TikTok, horarios, dirección | `src/data/site.js` |
-| Combos, precios, cantidades, fotos | `src/data/combos.js` (`combos`) |
+| Categorías y su orden | `src/data/combos.js` (`categories`) |
+| Productos, combos, precios, fotos | `src/data/combos.js` (`combos`) |
+| Promo cheddar / papas pay | `src/data/combos.js` (`CHEDDAR`, `PAPAS_PAY`) |
 | Promociones destacadas | `src/data/combos.js` (`promotions`) |
 | SEO (título, descripción, datos estructurados) | `index.html` |
 
@@ -34,3 +36,13 @@ La foto va en `src/assets/img/`, se importa arriba del archivo y se asigna en `i
 Las fotos actuales son recortes de los flyers de Combo Fiesta. Para reemplazarlas por fotografía profesional,
 pisá los archivos de `src/assets/img/` con el mismo nombre (formato `.webp`, ~900 px de ancho).
 Si la foto nueva ya no es "solo el paquete", sacá `pack: true` de ese combo.
+
+### Productos sin precio
+Los congelados, dulces, el maní Landy y las papas Oasis tienen `tiers: null`: se muestran con
+"Consultá precio" y el botón consulta por WhatsApp. Para publicar el precio, reemplazá
+`tiers: null` por `tiers: [{ qty: null, price: 12345 }]`.
+
+### Imágenes pendientes de reemplazo
+- `src/assets/img/promo/cheddar.svg` y `papas-pay.svg`: ilustraciones; reemplazables por fotos reales.
+- `choripan.webp`: recorte del flyer.
+- Arándanos y Moras Green Life: las fotos disponibles son chicas.

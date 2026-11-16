@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">
             <Logo className="h-20 w-auto" />
-            <p className="mt-5 text-white/65">Combos para compartir en {site.city}. Hamburguesas, panchos, choris y snacks.</p>
+            <p className="mt-5 text-white/65">Todo lo que buscás, en un solo lugar. Combos, snacks, congelados y frutas en {site.city}.</p>
           </div>
 
           <nav aria-label="Pie de página">

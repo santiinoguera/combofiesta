@@ -7,7 +7,7 @@ const BENEFITS = [
   {
     icon: GridIcon,
     title: 'Variedad de combos',
-    text: `${combos.length} combos entre hamburguesas, panchos, choris y snacks de marcas conocidas.`,
+    text: `${combos.length} productos entre combos, snacks, congelados y frutas de marcas conocidas.`,
     tone: 'bg-white text-navy',
     iconTone: 'bg-celeste text-white',
   },
