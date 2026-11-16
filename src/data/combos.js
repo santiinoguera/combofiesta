@@ -14,7 +14,7 @@
  *  - unitLabel: cómo se llaman las unidades ('hamburguesas', 'panchos', 'choris').
  *  - image:     foto del combo (1200x900, .webp). Son composiciones armadas con las fotos de producto
  *               que nos pasaste (paquete + pan + aderezos). Las que todavía son recortes de flyer:
- *               Snacks N°3 (Oasis), Super Panchos Sugarosa y Choris. REEMPLAZAR cuando haya fotos.
+ *               Snacks N°3 (Oasis) y Choris. REEMPLAZAR cuando haya fotos.
  *               (importarlas arriba y asignarlas acá; formato .webp recomendado, ~900px de ancho).
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
