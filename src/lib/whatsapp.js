@@ -5,19 +5,37 @@ import { formatPrice } from './format'
 export const whatsappLink = (message = site.whatsappGreeting) =>
   `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`
 
-/**
- * Mensaje automático con el producto elegido.
- * opts: { tier, addon (si el cliente lo sumó), variant (sabor) }
- */
-export const comboMessage = (combo, { tier, addon, variant } = {}) => {
-  const name = `*${combo.name}*${variant ? ` sabor ${variant}` : ''}`
-  if (!tier) {
-    return `¡Hola Combo Fiesta! Quiero consultar por ${name}. ¿Qué precio y disponibilidad tiene?`
-  }
-  const qty = tier.qty ? ` x${tier.qty}` : ''
-  const extra = addon ? ` con ${addon.label}` : ''
-  const total = tier.price + (addon?.price ?? 0)
-  return `¡Hola Combo Fiesta! Quiero pedir el ${name}${qty}${extra} (${formatPrice(total)}). ¿Me pasan info para coordinar la entrega?`
+/** Descripción de una línea del carrito: "Combo X x12 con cheddar (sabor Pizza)". */
+export const describeItem = (it) =>
+  [
+    it.name,
+    it.tierQty ? `x${it.tierQty}` : null,
+    it.addonLabel ? `con ${it.addonLabel}` : null,
+    it.variant ? `(sabor ${it.variant})` : null,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+/** Mensaje con el pedido completo del carrito. */
+export function cartMessage(items, { total, hasUnpriced, name, note }) {
+  const lines = items.map((it) => {
+    const price = it.unitPrice != null ? formatPrice(it.unitPrice * it.count) : 'precio a consultar'
+    return `• ${it.count} × ${describeItem(it)} — ${price}`
+  })
+  const totalLine = total > 0 ? `*Total: ${formatPrice(total)}*${hasUnpriced ? ' (+ productos a consultar)' : ''}` : '*Total: a consultar*'
+  return [
+    '¡Hola Combo Fiesta! Quiero hacer este pedido:',
+    '',
+    ...lines,
+    '',
+    totalLine,
+    name?.trim() ? `Nombre: ${name.trim()}` : null,
+    note?.trim() ? `Comentarios: ${note.trim()}` : null,
+    '',
+    '¿Me confirman disponibilidad y la entrega?',
+  ]
+    .filter((l) => l !== null)
+    .join('\n')
 }
 
-export const comboLink = (combo, opts) => whatsappLink(comboMessage(combo, opts))
+export const cartLink = (items, opts) => whatsappLink(cartMessage(items, opts))

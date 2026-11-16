@@ -107,3 +107,35 @@ export const ChatIcon = (p) => (
     <path d="M16 19h16M16 25h10" />
   </svg>
 )
+
+export const CartIcon = (p) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" {...base} {...p}>
+    <path d="M3 4h2.2l2.1 10.2a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2L20.5 8H6.1" />
+    <circle cx="9.5" cy="19.5" r="1.4" />
+    <circle cx="17" cy="19.5" r="1.4" />
+  </svg>
+)
+
+export const PlusIcon = (p) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" {...base} strokeWidth={2.4} {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+)
+
+export const MinusIcon = (p) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" {...base} strokeWidth={2.4} {...p}>
+    <path d="M5 12h14" />
+  </svg>
+)
+
+export const TrashIcon = (p) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" {...base} {...p}>
+    <path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" />
+  </svg>
+)
+
+export const ExpandIcon = (p) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" {...base} {...p}>
+    <path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7" />
+  </svg>
+)

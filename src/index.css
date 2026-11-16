@@ -22,9 +22,45 @@
   --animate-marquee: marquee 38s linear infinite;
   --animate-spin-slow: spin 22s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
+  --animate-pop: pop 0.35s ease-out;
+  --animate-price-pop: price-pop 0.35s ease-out;
+  --animate-dialog-in: dialog-in 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-drawer-in: drawer-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-cart-bump: cart-bump 0.5s ease-out;
+  --animate-wiggle: wiggle 2.4s ease-in-out infinite;
 
   @keyframes marquee {
     to { transform: translateX(-50%); }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.4); opacity: 0; }
+    70% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  @keyframes price-pop {
+    0% { transform: translateY(6px) scale(0.92); opacity: 0.4; }
+    100% { transform: none; opacity: 1; }
+  }
+  @keyframes dialog-in {
+    from { transform: translateY(24px) scale(0.97); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes drawer-in {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+  }
+  @keyframes cart-bump {
+    0%, 100% { transform: none; }
+    30% { transform: scale(1.3) rotate(-12deg); }
+    60% { transform: scale(0.95) rotate(8deg); }
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg) translateY(-2px); }
+  }
+  @keyframes shine {
+    0% { transform: translateX(-120%) skewX(-20deg); }
+    60%, 100% { transform: translateX(260%) skewX(-20deg); }
   }
   @keyframes float {
     0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
@@ -71,6 +107,20 @@
   .btn-ghost { @apply bg-white/0 text-navy ring-2 ring-navy ring-inset hover:bg-navy hover:text-white; }
   .btn-white { @apply bg-white text-navy hover:-translate-y-0.5 hover:shadow-lift; }
 
+  /* Brillo que recorre botones y la cinta de promo */
+  .btn-shine, .promo-ribbon { position: relative; overflow: hidden; isolation: isolate; }
+  .btn-shine::after, .promo-ribbon::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+    animation: shine 3.2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .promo-ribbon::after { z-index: 0; }
+
   /* Fondo de puntos estilo "sésamo" del logo */
   .dots {
     background-image: radial-gradient(currentColor 1.4px, transparent 1.6px);
@@ -99,5 +149,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .animate-marquee, .animate-spin-slow, .animate-float { animation: none !important; }
+  .animate-spin-slow, .animate-float, .animate-wiggle, .btn-shine::after, .promo-ribbon::after { animation: none !important; }
+  .animate-marquee { animation-duration: 90s !important; }
 }

@@ -1,9 +1,27 @@
 import Reveal from './Reveal'
 import PromoBanners from './PromoBanners'
-import { ArrowIcon, WhatsAppIcon, ClockIcon } from './Icons'
+import { ClockIcon } from './Icons'
 import { promotions, getCombo } from '../data/combos'
 import { formatPrice } from '../lib/format'
-import { comboLink } from '../lib/whatsapp'
+import { useCart, toCartItem } from '../cart/CartContext'
+import { CartIcon } from './Icons'
+
+function AddButton({ p, className, label, children }) {
+  const { add, openCart } = useCart()
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      className={className}
+      onClick={() => {
+        add(toCartItem(p.combo, { tier: p.tier }))
+        openCart()
+      }}
+    >
+      {children}
+    </button>
+  )
+}
 
 function resolve(promo) {
   const combo = getCombo(promo.comboId)
@@ -38,11 +56,10 @@ function FeaturedPromo({ p }) {
           {p.tier.qty && <p className="text-sm font-bold tracking-[0.16em] text-white/80 uppercase">Combo x{p.tier.qty}</p>}
           <p className="display text-6xl sm:text-7xl">{formatPrice(p.tier.price)}</p>
         </div>
-        <a href={comboLink(p.combo, { tier: p.tier })} target="_blank" rel="noopener noreferrer" className="btn btn-white !py-4">
-          <WhatsAppIcon className="size-5 text-[#1faa53]" />
-          Lo quiero
-          <span className="sr-only">: {p.combo.name}</span>
-        </a>
+        <AddButton p={p} className="btn btn-white btn-shine !py-4">
+          <CartIcon className="size-5 text-rojo" />
+          Agregar al carrito
+        </AddButton>
       </div>
     </article>
   )
@@ -70,15 +87,13 @@ function PromoTile({ p, tone }) {
             {p.tier.qty && <span className="block text-xs font-bold tracking-[0.14em] uppercase opacity-60">x{p.tier.qty}</span>}
             <span className="display text-5xl text-rojo">{formatPrice(p.tier.price)}</span>
           </p>
-          <a
-            href={comboLink(p.combo, { tier: p.tier })}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="grid size-14 shrink-0 place-items-center rounded-full bg-navy text-white transition-[transform,background-color] duration-300 group-hover:-rotate-45 hover:bg-rojo"
-            aria-label={`Pedir ${p.combo.name}${p.tier.qty ? ` x${p.tier.qty}` : ''} por WhatsApp`}
+          <AddButton
+            p={p}
+            className="grid size-14 shrink-0 place-items-center rounded-full bg-navy text-white transition-[transform,background-color] duration-300 hover:scale-110 hover:bg-rojo"
+            label={`Agregar ${p.combo.name}${p.tier.qty ? ` x${p.tier.qty}` : ''} al carrito`}
           >
-            <ArrowIcon className="size-6" />
-          </a>
+            <CartIcon className="size-6" />
+          </AddButton>
         </div>
       </div>
       <div className="relative hidden w-[42%] shrink-0 sm:block">

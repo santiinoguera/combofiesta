@@ -59,7 +59,7 @@ function CategorySection({ cat, index }) {
             <p className="mt-3 max-w-md text-white/75">{cat.tagline}</p>
             <p className="mt-5 text-sm font-bold text-white/60">
               {items.length} {items.length === 1 ? 'opción' : 'opciones'}
-              {priced === 0 && ' · precios por WhatsApp'}
+              {priced === 0 && ' · precios a consultar'}
             </p>
           </div>
           <div className="relative h-52 sm:col-span-6 sm:h-72 lg:col-span-7">
@@ -69,13 +69,28 @@ function CategorySection({ cat, index }) {
         </div>
       </Reveal>
 
-      <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-        {items.map((combo, i) => (
-          <Reveal key={combo.id} delay={(i % 3) * 80} className="h-full">
-            <ComboCard combo={combo} />
-          </Reveal>
-        ))}
-      </div>
+      {(cat.groups ?? [null]).map((g) => {
+        const list = g ? items.filter((it) => it.group === g) : items
+        if (!list.length) return null
+        return (
+          <div key={g ?? 'all'}>
+            {g && (
+              <h4 className="display mt-10 flex items-center gap-3 text-3xl text-navy">
+                <span className={`h-1.5 w-10 rounded-full ${g === 'Dulce' ? 'bg-rojo' : 'bg-celeste'}`} />
+                {g}
+                <span className="font-sans text-sm font-bold text-navy/40">{list.length}</span>
+              </h4>
+            )}
+            <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+              {list.map((combo, i) => (
+                <Reveal key={combo.id} delay={(i % 3) * 80} className="h-full">
+                  <ComboCard combo={combo} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        )
+      })}
     </section>
   )
 }
@@ -112,8 +127,8 @@ export default function Catalog() {
           </Reveal>
           <Reveal delay={100} className="lg:col-span-5">
             <p className="text-lg leading-relaxed text-navy/70">
-              Elegí la cantidad o el sabor y el pedido te llega armado a WhatsApp. Los productos sin precio publicado se
-              consultan con un toque.
+              Tocá un producto para verlo en grande, elegí cantidad o sabor y sumalo al carrito. Al finalizar, el
+              pedido completo te llega armado a WhatsApp.
             </p>
           </Reveal>
         </div>

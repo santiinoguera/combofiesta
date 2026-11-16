@@ -55,9 +55,9 @@ export default function PromoBanners() {
         <Banner
           tone="bg-celeste text-navy"
           sticker={PAPAS_PAY.image}
-          eyebrow="Combos de super panchos"
+          eyebrow="Combos de panchos"
           title={PAPAS_PAY.tag}
-          text="Los combos de super panchos Paladini y Sugarosa vienen con papas pay."
+          text="Sumale un paquete de papas pay Oasis a cualquier combo de panchos. Activalo en la tarjeta del combo."
           cta="Ver panchos"
           href="#cat-panchos"
           image={getCombo('super-panchos-paladini').image}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Logo from './Logo'
+import CartButton from './CartButton'
 import { WhatsAppIcon, MenuIcon, CloseIcon } from './Icons'
 import { whatsappLink } from '../lib/whatsapp'
 import { site } from '../data/site'
@@ -80,6 +81,7 @@ export default function Header() {
             <WhatsAppIcon className="size-5" />
             Pedí por WhatsApp
           </a>
+          <CartButton />
           <button
             ref={toggleRef}
             type="button"

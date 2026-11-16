@@ -8,10 +8,12 @@ import Benefits from './components/Benefits'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
+import CartDrawer from './components/CartDrawer'
+import { CartProvider } from './cart/CartContext'
 
 export default function App() {
   return (
-    <>
+    <CartProvider>
       <a
         href="#catalogo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-navy focus:px-5 focus:py-3 focus:text-white"
@@ -30,6 +32,7 @@ export default function App() {
       </main>
       <Footer />
       <FloatingWhatsApp />
-    </>
+      <CartDrawer />
+    </CartProvider>
   )
 }
