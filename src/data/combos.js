@@ -12,9 +12,9 @@
  *  - tiers:     opciones de cantidad. `qty` = unidades, `price` = precio en pesos (número, sin puntos).
  *               Si `qty` es null, el combo tiene un precio único (ej. snacks).
  *  - unitLabel: cómo se llaman las unidades ('hamburguesas', 'panchos', 'choris').
- *  - image:     foto. Sugarosa, La Muñeca 83 g con soja, Snacks N°1 y Super Panchos Paladini usan fotos
- *               de producto en alta calidad; el resto son recortes de los flyers de Combo Fiesta:
- *               REEMPLAZAR por fotos profesionales del producto cuando estén disponibles
+ *  - image:     foto del combo (1200x900, .webp). Son composiciones armadas con las fotos de producto
+ *               que nos pasaste (paquete + pan + aderezos). Las que todavía son recortes de flyer:
+ *               Snacks N°3 (Oasis), Super Panchos Sugarosa y Choris. REEMPLAZAR cuando haya fotos.
  *               (importarlas arriba y asignarlas acá; formato .webp recomendado, ~900px de ancho).
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
@@ -64,7 +64,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([32900, 60900, 87500, 111500, 133900]),
     image: burgerMuneca120,
-    pack: true,
   },
   {
     id: 'paladini-80',
@@ -77,7 +76,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([27900, 52900, 76900, 97900, 119900]),
     image: burgerPaladini,
-    pack: true,
   },
   {
     id: 'swift-80',
@@ -90,7 +88,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([24900, 47900, 69900, 88900, 105900]),
     image: burgerSwift,
-    pack: true,
   },
   {
     id: 'paty-80',
@@ -103,7 +100,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([24000, 44500, 63900, 81900, 97900]),
     image: burgerPaty,
-    pack: true,
   },
   {
     id: 'campo-grande-80',
@@ -116,7 +112,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([23500, 43500, 62900, 79900, 95900]),
     image: burgerCampoGrande,
-    pack: true,
   },
   {
     id: 'la-muneca-83',
@@ -129,7 +124,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([22900, 42900, 61900, 78900, 94900]),
     image: burgerMuneca83,
-    pack: true,
   },
   {
     id: 'la-muneca-83-soja',
@@ -142,7 +136,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: tiers([17500, 31900, 46500, 58900, 70900]),
     image: burgerMunecaSoja,
-    pack: true,
   },
   {
     id: 'sugarosa-70',
@@ -155,7 +148,6 @@ export const combos = [
     unitLabel: 'hamburguesas',
     tiers: [{ qty: 60, price: 56000 }],
     image: burgerSugarosa,
-    pack: true,
   },
   {
     id: 'la-muneca-198',
@@ -238,7 +230,6 @@ export const combos = [
     includes: ['450 g Papas acanaladas', '265 g Maicitos', '620 g Palitos salados'],
     tiers: [{ qty: null, price: 23500 }],
     image: snacks1,
-    pack: true,
   },
   {
     id: 'snacks-2',
