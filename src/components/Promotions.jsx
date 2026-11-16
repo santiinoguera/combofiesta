@@ -87,7 +87,7 @@ function PromoTile({ p, tone }) {
           loading="lazy"
           decoding="async"
           className={`absolute inset-0 size-full transition-transform duration-700 group-hover:scale-105 ${
-            p.combo.pack ? 'object-contain p-5 -rotate-3' : 'object-cover'
+            p.combo.pack ? 'object-contain p-5 -rotate-3 drop-shadow-[0_14px_18px_rgb(23_38_56/0.25)]' : 'object-cover'
           }`}
         />
       </div>

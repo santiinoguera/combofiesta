@@ -12,7 +12,8 @@
  *  - tiers:     opciones de cantidad. `qty` = unidades, `price` = precio en pesos (número, sin puntos).
  *               Si `qty` es null, el combo tiene un precio único (ej. snacks).
  *  - unitLabel: cómo se llaman las unidades ('hamburguesas', 'panchos', 'choris').
- *  - image:     foto. Las actuales son recortes de los flyers de Combo Fiesta:
+ *  - image:     foto. Sugarosa, La Muñeca 83 g con soja, Snacks N°1 y Super Panchos Paladini usan fotos
+ *               de producto en alta calidad; el resto son recortes de los flyers de Combo Fiesta:
  *               REEMPLAZAR por fotos profesionales del producto cuando estén disponibles
  *               (importarlas arriba y asignarlas acá; formato .webp recomendado, ~900px de ancho).
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
@@ -237,6 +238,7 @@ export const combos = [
     includes: ['450 g Papas acanaladas', '265 g Maicitos', '620 g Palitos salados'],
     tiers: [{ qty: null, price: 23500 }],
     image: snacks1,
+    pack: true,
   },
   {
     id: 'snacks-2',

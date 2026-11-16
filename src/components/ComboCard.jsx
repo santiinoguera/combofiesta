@@ -26,7 +26,7 @@ export default function ComboCard({ combo }) {
               alt={`Paquete de ${combo.name}`}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 m-auto h-[78%] w-auto -rotate-3 rounded-md object-contain shadow-lift transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105"
+              className="absolute inset-0 m-auto h-[80%] w-auto max-w-[80%] -rotate-3 object-contain drop-shadow-[0_18px_22px_rgb(23_38_56/0.28)] transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105"
             />
           </>
         ) : (
