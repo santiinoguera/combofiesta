@@ -51,7 +51,7 @@ export default function Header() {
     >
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <a href="#inicio" onClick={close} className="shrink-0 transition-transform hover:-rotate-3" aria-label="Combo Fiesta, ir al inicio">
-          <Logo className="h-11 w-auto sm:h-12" />
+          <Logo className="h-12 w-auto sm:h-14" />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">

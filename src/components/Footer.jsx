@@ -8,10 +8,10 @@ import { site } from '../data/site'
 export default function Footer() {
   return (
     <footer className="bg-navy text-white">
-      <div className="mx-auto max-w-7xl px-4 pt-16 pb-28 sm:px-6 sm:pb-10 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-28 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">
-            <Logo className="h-16 w-auto" />
+            <Logo className="h-20 w-auto" />
             <p className="mt-5 text-white/65">Combos para compartir en {site.city}. Hamburguesas, panchos, choris y snacks.</p>
           </div>
 

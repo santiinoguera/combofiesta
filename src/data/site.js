@@ -16,7 +16,7 @@ export const site = {
   // Mensaje genérico (botones que no corresponden a un combo puntual).
   whatsappGreeting: '¡Hola Combo Fiesta! Quiero hacer un pedido. ¿Me pasan info?',
 
-  instagram: { user: 'combo.fiestaa', url: 'https://www.instagram.com/combo.fiestaa/' },
+  instagram: { user: 'combo.fiestaa', url: 'https://www.instagram.com/combo.fiestaa/?hl=es' },
   // PENDIENTE: completar con la cuenta real, ej. { user: 'combofiesta', url: 'https://www.tiktok.com/@combofiesta' }
   tiktok: null,
   facebook: null,
