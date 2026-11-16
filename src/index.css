@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+/* ── Identidad Combo Fiesta ───────────────────────────── */
+@theme {
+  --color-celeste: #55bdeb;
+  --color-celeste-deep: #2fa3d6;
+  --color-celeste-soft: #dff2fb;
+  --color-rojo: #e53945;
+  --color-rojo-deep: #c72633;
+  --color-navy: #172638;
+  --color-navy-soft: #2a3b50;
+  --color-crema: #f5f3ef;
+  --color-crema-deep: #ebe7df;
+
+  --font-display: 'Anton', 'Impact', 'Arial Narrow Bold', sans-serif;
+  --font-sans: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px rgb(23 38 56 / 0.06), 0 12px 32px -12px rgb(23 38 56 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(23 38 56 / 0.06), 0 28px 50px -20px rgb(23 38 56 / 0.35);
+  --shadow-sticker: 4px 4px 0 0 #172638;
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-spin-slow: spin 22s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50% { transform: translateY(-10px) rotate(var(--r, 0deg)); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-white font-sans text-navy antialiased;
+    font-optical-sizing: auto;
+  }
+  ::selection { @apply bg-celeste text-navy; }
+  :focus-visible {
+    outline: 3px solid var(--color-rojo);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  img { @apply select-none; }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 0.92;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[0.95rem] font-bold
+      transition-[transform,background-color,box-shadow,color] duration-200 ease-out
+      active:translate-y-px active:scale-[0.98] motion-reduce:transition-none;
+  }
+  .btn-red { @apply bg-rojo text-white shadow-[0_10px_24px_-10px_rgb(229_57_69/0.7)] hover:bg-rojo-deep hover:-translate-y-0.5; }
+  .btn-navy { @apply bg-navy text-white hover:bg-navy-soft hover:-translate-y-0.5; }
+  .btn-ghost { @apply bg-white/0 text-navy ring-2 ring-navy ring-inset hover:bg-navy hover:text-white; }
+  .btn-white { @apply bg-white text-navy hover:-translate-y-0.5 hover:shadow-lift; }
+
+  /* Fondo de puntos estilo "sésamo" del logo */
+  .dots {
+    background-image: radial-gradient(currentColor 1.4px, transparent 1.6px);
+    background-size: 18px 18px;
+  }
+  /* Borde ondulado (para el corte entre secciones) */
+  .wave-top {
+    -webkit-mask: radial-gradient(14px at 50% 0, #0000 98%, #000) 50% / 28px 100%;
+    mask: radial-gradient(14px at 50% 0, #0000 98%, #000) 50% / 28px 100%;
+  }
+}
+
+/* ── Animaciones de entrada (solo con JS y sin reduce-motion) ── */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-spin-slow, .animate-float { animation: none !important; }
+}
