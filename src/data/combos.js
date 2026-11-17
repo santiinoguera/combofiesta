@@ -675,7 +675,7 @@ export const combos = [
     weight: '1,05 kg',
     description: 'Papas con caritas, las preferidas de los chicos.',
     tiers: [{ qty: null, price: 7900 }],
-    image: bembrasilCarinhas, // REEMPLAZAR: la foto disponible es chica
+    image: bembrasilCarinhas,
     pack: true,
   },
   {
