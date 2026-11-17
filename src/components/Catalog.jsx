@@ -17,24 +17,33 @@ function CategoryNav({ active }) {
 
   return (
     <nav aria-label="Categorías del catálogo" className="sticky top-[4.5rem] z-30 border-y border-navy/10 bg-white/95 backdrop-blur-md">
-      <ul ref={listRef} className="mx-auto flex max-w-7xl overflow-x-auto px-2 [scrollbar-width:none] sm:px-6 lg:px-8">
-        {categories.map((cat, i) => {
-          const on = cat.id === active
-          return (
-            <li key={cat.id} data-cat={cat.id} className="shrink-0">
-              <a
-                href={`#cat-${cat.id}`}
-                aria-current={on ? 'true' : undefined}
-                className={`relative flex items-baseline gap-2 px-4 py-4 text-[0.95rem] font-extrabold transition-colors ${on ? 'text-navy' : 'text-navy/45 hover:text-navy'}`}
-              >
-                <span className="font-display text-xs text-rojo">{String(i + 1).padStart(2, '0')}</span>
-                {cat.label}
-                <span className={`absolute inset-x-3 bottom-0 h-[3px] origin-left bg-rojo transition-transform duration-300 ${on ? 'scale-x-100' : 'scale-x-0'}`} />
-              </a>
-            </li>
-          )
-        })}
-      </ul>
+      <div className="relative mx-auto max-w-7xl">
+        <ul ref={listRef} className="flex gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] sm:px-6 lg:px-8">
+          {categories.map((cat, i) => {
+            const on = cat.id === active
+            return (
+              <li key={cat.id} data-cat={cat.id} className="shrink-0">
+                <a
+                  href={`#cat-${cat.id}`}
+                  aria-current={on ? 'true' : undefined}
+                  className={`flex items-center gap-2 rounded-full border-2 px-4 py-2 text-[0.95rem] font-extrabold transition-[background-color,border-color,color,transform] duration-200 active:scale-95 ${
+                    on
+                      ? 'border-navy bg-navy text-white shadow-[0_6px_16px_-8px_rgb(23_38_56/0.7)]'
+                      : 'border-navy/15 bg-white text-navy hover:border-rojo hover:text-rojo'
+                  }`}
+                >
+                  <span className={`grid size-6 place-items-center rounded-full font-display text-xs ${on ? 'bg-rojo text-white' : 'bg-crema text-rojo'}`}>
+                    {i + 1}
+                  </span>
+                  {cat.label}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+        {/* indica que se puede deslizar (solo cuando no entra todo) */}
+        <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent lg:hidden" />
+      </div>
     </nav>
   )
 }
