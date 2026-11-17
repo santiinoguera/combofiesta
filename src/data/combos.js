@@ -76,6 +76,9 @@ import swiftCrunchies from '../assets/img/products/swift-crunchies.webp'
 import sadiaGoldenChicken from '../assets/img/products/sadia-golden-chicken.webp'
 import swiftPalitosPollo from '../assets/img/products/swift-palitos-pollo.webp'
 import munecaXxlPack from '../assets/img/products/muneca-xxl.webp'
+import glArvejas from '../assets/img/products/gl-arvejas.webp'
+import glBrocoli from '../assets/img/products/gl-brocoli.webp'
+import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
 import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 
 /**
@@ -424,6 +427,18 @@ export const combos = [
     pack: true,
   },
   {
+    id: 'simplot-papas-11',
+    category: 'congelados',
+    group: 'Salado',
+    name: 'Papas Simplot Corte Tradicional 1,1 kg',
+    brand: 'Simplot',
+    weight: '1,1 kg',
+    description: 'Papas prefritas supercongeladas, corte tradicional. Sin gluten.',
+    tiers: [{ qty: null, price: 7900 }],
+    image: simplotPapas11,
+    pack: true,
+  },
+  {
     id: 'green-life-veggies',
     category: 'congelados',
     group: 'Salado',
@@ -481,6 +496,30 @@ export const combos = [
     description: 'Arvejas, chauchas, choclo y zanahorias.',
     tiers: [{ qty: null, price: 4300 }],
     image: glPrimavera,
+    pack: true,
+  },
+  {
+    id: 'green-life-arvejas',
+    category: 'congelados',
+    group: 'Salado',
+    name: 'Arvejas Green Life 300 g',
+    brand: 'Green Life',
+    weight: '300 g',
+    description: 'Sin conservantes y fuente de fibra.',
+    tiers: [{ qty: null, price: 4500 }],
+    image: glArvejas,
+    pack: true,
+  },
+  {
+    id: 'green-life-brocoli',
+    category: 'congelados',
+    group: 'Salado',
+    name: 'Brócoli Green Life 400 g',
+    brand: 'Green Life',
+    weight: '400 g',
+    description: 'Sin conservantes, fuente de fibra y bajo en sodio.',
+    tiers: [{ qty: null, price: 5900 }],
+    image: glBrocoli,
     pack: true,
   },
 
