@@ -69,18 +69,14 @@ import mccainClasicas from '../assets/img/products/mccain-clasicas.webp'
 import mccainNoisette from '../assets/img/products/mccain-noisette.webp'
 import oasisConitos from '../assets/img/products/oasis-conitos.webp'
 import oasisChalitas from '../assets/img/products/oasis-chalitas.webp'
-import parmesanaChimichurri from '../assets/img/products/parmesana-chimichurri.webp'
-import parmesanaCriolla from '../assets/img/products/parmesana-criolla.webp'
-import danicaCheddar from '../assets/img/products/danica-cheddar.webp'
 import vegetalexBurger from '../assets/img/products/vegetalex-burger.webp'
-import tonaditaDipCheddar from '../assets/img/products/tonadita-dip-cheddar.webp'
-import carbonLosLenos from '../assets/img/products/carbon-los-lenos.webp'
 import paladiniMedallonesPollo from '../assets/img/products/paladini-medallones-pollo.webp'
 import paladiniPapasBaston from '../assets/img/products/paladini-papas-baston.webp'
 import swiftCrunchies from '../assets/img/products/swift-crunchies.webp'
 import sadiaGoldenChicken from '../assets/img/products/sadia-golden-chicken.webp'
 import swiftPalitosPollo from '../assets/img/products/swift-palitos-pollo.webp'
 import granjaDelSolMilanesas from '../assets/img/products/granja-del-sol-milanesas.webp'
+import munecaXxlPack from '../assets/img/products/muneca-xxl.webp'
 import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 
 /**
@@ -100,7 +96,7 @@ export const categories = [
     id: 'panchos',
     label: 'Panchos',
     title: 'Combos de panchos',
-    tagline: 'Salchichas, pan y aderezos para armar la panchada. Sumale papas pay por $1.000 más.',
+    tagline: 'Salchichas, pan y aderezos para armar la panchada. Sumale papas pay por $1.000 más a cualquier combo.',
     cover: superPanchosPaladini,
   },
   {
@@ -124,13 +120,6 @@ export const categories = [
     tagline: 'Papas, pollo, vegetales y frutas congeladas. Salado y dulce, listos para el freezer.',
     groups: ['Salado', 'Dulce'],
     cover: catCongelados,
-  },
-  {
-    id: 'aderezos',
-    label: 'Aderezos y más',
-    title: 'Aderezos y extras',
-    tagline: 'Salsas, dips y carbón para completar la juntada.',
-    cover: parmesanaCriolla,
   },
 ]
 
@@ -419,7 +408,7 @@ export const combos = [
     brand: 'Swift',
     weight: '400 g',
     description: 'Formados de carne de pollo rebozados, supercongelados.',
-    tiers: null,
+    tiers: [{ qty: null, price: 5900 }],
     image: swiftBocaditos,
     pack: true,
   },
@@ -431,7 +420,7 @@ export const combos = [
     brand: 'Simplot',
     weight: '700 g',
     description: 'Papas prefritas supercongeladas, corte tradicional.',
-    tiers: null,
+    tiers: [{ qty: null, price: 5900 }],
     image: simplotPapas,
     pack: true,
   },
@@ -455,7 +444,7 @@ export const combos = [
     brand: 'Green Life',
     weight: '550 g',
     description: 'Sin conservantes, fuente de fibra y bajo en sodio.',
-    tiers: null,
+    tiers: [{ qty: null, price: 5000 }],
     image: glEspinaca,
     pack: true,
   },
@@ -479,7 +468,7 @@ export const combos = [
     brand: 'Green Life',
     weight: '350 g',
     description: 'Choclo amarillo en granos. Sin conservantes y bajo en sodio.',
-    tiers: null,
+    tiers: [{ qty: null, price: 4000 }],
     image: glChoclo,
     pack: true,
   },
@@ -491,7 +480,7 @@ export const combos = [
     brand: 'Green Life',
     weight: '350 g',
     description: 'Arvejas, chauchas, choclo y zanahorias.',
-    tiers: null,
+    tiers: [{ qty: null, price: 4300 }],
     image: glPrimavera,
     pack: true,
   },
@@ -505,7 +494,7 @@ export const combos = [
     brand: 'Green Life',
     weight: '550 g',
     description: 'Frutillas enteras, listas para consumir.',
-    tiers: null,
+    tiers: [{ qty: null, price: 6900 }],
     image: glFrutillas,
     pack: true,
   },
@@ -529,7 +518,7 @@ export const combos = [
     brand: 'Green Life',
     weight: '550 g',
     description: 'Frutillas, moras y frambuesas enteras.',
-    tiers: null,
+    tiers: [{ qty: null, price: 9900 }],
     image: glMixBerries,
     pack: true,
   },
@@ -540,7 +529,7 @@ export const combos = [
     name: 'Arándanos Green Life',
     brand: 'Green Life',
     description: 'Arándanos listos para consumir.',
-    tiers: null,
+    tiers: [{ qty: null, price: 6900 }],
     image: glArandanos, // REEMPLAZAR: la foto disponible es chica
     pack: true,
   },
@@ -587,7 +576,7 @@ export const combos = [
     brand: 'Paladini',
     weight: '1,1 kg',
     description: 'Papas prefritas bastón, aptas air fryer. Sin gluten.',
-    tiers: null,
+    tiers: [{ qty: null, price: 7900 }],
     image: paladiniPapasBaston,
     photo: true,
   },
@@ -599,7 +588,7 @@ export const combos = [
     brand: 'McCain',
     weight: '400 g',
     description: 'Papas prefritas bastón, pack XS. Libres de gluten.',
-    tiers: null,
+    tiers: [{ qty: null, price: 3900 }],
     image: mccainClasicas,
     photo: true,
   },
@@ -611,7 +600,7 @@ export const combos = [
     brand: 'McCain',
     weight: '400 g',
     description: 'Croquetas de papa con caritas, ideales para air fryer.',
-    tiers: null,
+    tiers: [{ qty: null, price: 5000 }],
     image: mccainSmiles,
     photo: true,
   },
@@ -635,7 +624,7 @@ export const combos = [
     brand: 'BemBrasil',
     weight: '1,05 kg',
     description: 'Bolitas de puré de papa prefritas, aptas air fryer.',
-    tiers: null,
+    tiers: [{ qty: null, price: 7900 }],
     image: bembrasilNoisette,
     photo: true,
   },
@@ -647,7 +636,7 @@ export const combos = [
     brand: 'BemBrasil',
     weight: '1,05 kg',
     description: 'Papas con caritas, las preferidas de los chicos.',
-    tiers: null,
+    tiers: [{ qty: null, price: 7900 }],
     image: bembrasilCarinhas, // REEMPLAZAR: la foto disponible es chica
     pack: true,
   },
@@ -659,7 +648,7 @@ export const combos = [
     brand: 'Swift',
     weight: '380 g',
     description: 'Formados de carne de pollo rebozados, supercongelados.',
-    tiers: null,
+    tiers: [{ qty: null, price: 5900 }],
     image: swiftCrunchies,
     photo: true,
   },
@@ -671,7 +660,7 @@ export const combos = [
     brand: 'Swift',
     weight: '260 g',
     description: 'Formados de carne de pollo rebozados.',
-    tiers: null,
+    tiers: [{ qty: null, price: 4200 }],
     image: swiftPalitosPollo,
     photo: true,
   },
@@ -687,6 +676,18 @@ export const combos = [
     photo: true,
   },
   {
+    id: 'muneca-198-x2',
+    category: 'congelados',
+    group: 'Salado',
+    name: 'Hamburguesas La Muñeca 198 g x2',
+    brand: 'La Muñeca',
+    weight: '396 g',
+    description: 'Dos hamburguesas de carne vacuna de 198 g, supercongeladas.',
+    tiers: [{ qty: null, price: 6900 }],
+    image: munecaXxlPack,
+    pack: true,
+  },
+  {
     id: 'paladini-medallones-pollo',
     category: 'congelados',
     group: 'Salado',
@@ -694,7 +695,7 @@ export const combos = [
     brand: 'Paladini',
     weight: '150 g',
     description: 'Dos medallones de pollo rebozados, al horno o fritos.',
-    tiers: null,
+    tiers: [{ qty: null, price: 2900 }],
     image: paladiniMedallonesPollo,
     photo: true,
   },
@@ -705,7 +706,7 @@ export const combos = [
     name: 'Milanesas de Soja con Espinaca Granja del Sol x4',
     brand: 'Granja del Sol',
     description: 'Cuatro milanesas de soja con espinaca.',
-    tiers: null,
+    tiers: [{ qty: null, price: 4800 }],
     image: granjaDelSolMilanesas,
     photo: true,
   },
@@ -717,62 +718,8 @@ export const combos = [
     brand: 'Vegetalex',
     weight: '226 g',
     description: 'Hamburguesas con ingredientes de origen vegetal, 2 de 113 g.',
-    tiers: null,
+    tiers: [{ qty: null, price: 6900 }],
     image: vegetalexBurger,
-    photo: true,
-  },
-  {
-    id: 'parmesana-chimichurri',
-    category: 'aderezos',
-    name: 'Chimichurri La Parmesana 300 ml',
-    brand: 'La Parmesana',
-    weight: '300 ml',
-    description: 'El chimichurri para el asado y los choris.',
-    tiers: null,
-    image: parmesanaChimichurri,
-    photo: true,
-  },
-  {
-    id: 'parmesana-criolla',
-    category: 'aderezos',
-    name: 'Salsa Criolla La Parmesana 300 ml',
-    brand: 'La Parmesana',
-    weight: '300 ml',
-    description: 'Salsa criolla lista para servir.',
-    tiers: null,
-    image: parmesanaCriolla,
-    photo: true,
-  },
-  {
-    id: 'danica-cheddar',
-    category: 'aderezos',
-    name: 'Salsa sabor Cheddar Dánica',
-    brand: 'Dánica',
-    description: 'Ideal para dipear papas y nachos.',
-    tiers: null,
-    image: danicaCheddar,
-    photo: true,
-  },
-  {
-    id: 'tonadita-dip-cheddar',
-    category: 'aderezos',
-    name: 'Dip Cheddar Tonadita 180 g',
-    brand: 'Tonadita',
-    weight: '180 g',
-    description: 'Queso procesado sabor cheddar, apto microondas. Sin gluten.',
-    tiers: null,
-    image: tonaditaDipCheddar,
-    photo: true,
-  },
-  {
-    id: 'carbon-los-lenos',
-    category: 'aderezos',
-    name: 'Carbón Vegetal Los Leños 4 kg',
-    brand: 'Los Leños',
-    weight: '4 kg',
-    description: 'Carbón vegetal premium para el asado.',
-    tiers: [{ qty: null, price: 5500 }], // precio tomado del cartel de oferta del local: confirmar
-    image: carbonLosLenos,
     photo: true,
   },
 ]
