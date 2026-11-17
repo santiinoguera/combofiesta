@@ -75,7 +75,6 @@ import paladiniPapasBaston from '../assets/img/products/paladini-papas-baston.we
 import swiftCrunchies from '../assets/img/products/swift-crunchies.webp'
 import sadiaGoldenChicken from '../assets/img/products/sadia-golden-chicken.webp'
 import swiftPalitosPollo from '../assets/img/products/swift-palitos-pollo.webp'
-import granjaDelSolMilanesas from '../assets/img/products/granja-del-sol-milanesas.webp'
 import munecaXxlPack from '../assets/img/products/muneca-xxl.webp'
 import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 
@@ -697,17 +696,6 @@ export const combos = [
     description: 'Dos medallones de pollo rebozados, al horno o fritos.',
     tiers: [{ qty: null, price: 2900 }],
     image: paladiniMedallonesPollo,
-    photo: true,
-  },
-  {
-    id: 'granja-del-sol-milanesas-espinaca',
-    category: 'congelados',
-    group: 'Salado',
-    name: 'Milanesas de Soja con Espinaca Granja del Sol x4',
-    brand: 'Granja del Sol',
-    description: 'Cuatro milanesas de soja con espinaca.',
-    tiers: [{ qty: null, price: 4800 }],
-    image: granjaDelSolMilanesas,
     photo: true,
   },
   {
