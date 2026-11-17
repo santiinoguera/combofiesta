@@ -624,7 +624,7 @@ export const combos = [
     description: 'Papas prefritas bastón, aptas air fryer. Sin gluten.',
     tiers: [{ qty: null, price: 7900 }],
     image: paladiniPapasBaston,
-    photo: true,
+    pack: true,
   },
   {
     id: 'mccain-clasicas',
@@ -648,7 +648,7 @@ export const combos = [
     description: 'Croquetas de papa con caritas, ideales para air fryer.',
     tiers: [{ qty: null, price: 5000 }],
     image: mccainSmiles,
-    photo: true,
+    pack: true,
   },
   {
     id: 'mccain-noisette',
@@ -660,7 +660,7 @@ export const combos = [
     description: 'Croquetas de papa noisette para horno. Sin T.A.C.C.',
     tiers: null,
     image: mccainNoisette,
-    photo: true,
+    pack: true,
   },
   {
     id: 'bembrasil-noisette',
@@ -672,7 +672,7 @@ export const combos = [
     description: 'Bolitas de puré de papa prefritas, aptas air fryer.',
     tiers: [{ qty: null, price: 7900 }],
     image: bembrasilNoisette,
-    photo: true,
+    pack: true,
   },
   {
     id: 'bembrasil-carinhas',
@@ -696,7 +696,7 @@ export const combos = [
     description: 'Formados de carne de pollo rebozados, supercongelados.',
     tiers: [{ qty: null, price: 5900 }],
     image: swiftCrunchies,
-    photo: true,
+    pack: true,
   },
   {
     id: 'swift-palitos-pollo',
