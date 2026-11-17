@@ -73,9 +73,7 @@ import vegetalexBurger from '../assets/img/products/vegetalex-burger.webp'
 import paladiniMedallonesPollo from '../assets/img/products/paladini-medallones-pollo.webp'
 import paladiniPapasBaston from '../assets/img/products/paladini-papas-baston.webp'
 import swiftCrunchies from '../assets/img/products/swift-crunchies.webp'
-import sadiaGoldenChicken from '../assets/img/products/sadia-golden-chicken.webp'
 import swiftPalitosPollo from '../assets/img/products/swift-palitos-pollo.webp'
-import munecaXxlPack from '../assets/img/products/muneca-xxl.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -564,22 +562,24 @@ export const combos = [
     id: 'green-life-arandanos',
     category: 'congelados',
     group: 'Dulce',
-    name: 'Arándanos Green Life',
+    name: 'Arándanos Green Life 400 g',
+    weight: '400 g',
     brand: 'Green Life',
     description: 'Arándanos listos para consumir.',
     tiers: [{ qty: null, price: 6900 }],
-    image: glArandanos, // REEMPLAZAR: la foto disponible es chica
+    image: glArandanos,
     pack: true,
   },
   {
     id: 'green-life-moras',
     category: 'congelados',
     group: 'Dulce',
-    name: 'Moras Green Life',
+    name: 'Moras Green Life 550 g',
+    weight: '550 g',
     brand: 'Green Life',
     description: 'Moras listas para consumir.',
     tiers: null,
-    image: glMoras, // REEMPLAZAR: la foto disponible es chica
+    image: glMoras,
     pack: true,
   },
 
@@ -700,29 +700,6 @@ export const combos = [
     description: 'Formados de carne de pollo rebozados.',
     tiers: [{ qty: null, price: 4200 }],
     image: swiftPalitosPollo,
-    photo: true,
-  },
-  {
-    id: 'sadia-golden-chicken',
-    category: 'congelados',
-    group: 'Salado',
-    name: 'Golden Chicken Sadia',
-    brand: 'Sadia',
-    description: 'Tiritas de pechuga de pollo rebozadas.',
-    tiers: null,
-    image: sadiaGoldenChicken,
-    photo: true,
-  },
-  {
-    id: 'muneca-198-x2',
-    category: 'congelados',
-    group: 'Salado',
-    name: 'Hamburguesas La Muñeca 198 g x2',
-    brand: 'La Muñeca',
-    weight: '396 g',
-    description: 'Dos hamburguesas de carne vacuna de 198 g, supercongeladas.',
-    tiers: [{ qty: null, price: 6900 }],
-    image: munecaXxlPack,
     pack: true,
   },
   {
