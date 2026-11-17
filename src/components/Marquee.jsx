@@ -2,7 +2,7 @@ import { categories } from '../data/combos'
 
 /* Cinta en movimiento entre el hero y el catálogo */
 export default function Marquee() {
-  const words = [...categories.map((c) => c.label), 'Pan y aderezos incluidos', 'Envíos a domicilio']
+  const words = [...categories.map((c) => (c.id === 'panchos' ? 'Super Panchos' : c.label)), 'Pan y aderezos incluidos', 'Envíos a domicilio']
   const row = (
     <ul className="flex shrink-0 items-center">
       {words.map((w) => (
