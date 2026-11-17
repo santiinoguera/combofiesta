@@ -44,7 +44,7 @@ export default function PromoBanners() {
         <Banner
           promo={PAPAS_PAY}
           title="Combos de panchos y super panchos"
-          text="Sumale un paquete de papas pay Oasis a cualquier combo de panchos."
+          text="Sumale papas pay Oasis o cheddar (o los dos) a cualquier combo de panchos, por $1.000 más cada uno."
           cta="Ver panchos"
           href="#cat-panchos"
         />

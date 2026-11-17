@@ -13,8 +13,8 @@ export default function AddToCartButton({ combo, selection, count = 1, compact =
   const timer = useRef(null)
   useEffect(() => () => clearTimeout(timer.current), [])
 
-  const { tier, addon } = selection
-  const total = tier ? (tier.price + (addon?.price ?? 0)) * count : null
+  const { tier, addons = [] } = selection
+  const total = tier ? (tier.price + addons.reduce((n, a) => n + a.price, 0)) * count : null
 
   const onClick = () => {
     add(toCartItem(combo, selection), count)
@@ -24,7 +24,7 @@ export default function AddToCartButton({ combo, selection, count = 1, compact =
     onAdded?.()
   }
 
-  const label = `Agregar ${combo.name}${tier?.qty ? ` x${tier.qty}` : ''}${addon ? ` con ${addon.label}` : ''} al carrito`
+  const label = `Agregar ${combo.name}${tier?.qty ? ` x${tier.qty}` : ''}${addons.length ? ` con ${addons.map((a) => a.label).join(' y ')}` : ''} al carrito`
 
   return (
     <button

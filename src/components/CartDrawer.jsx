@@ -10,13 +10,15 @@ function CartLine({ it }) {
   const cart = useCart()
   const combo = getCombo(it.id)
   const tiers = combo?.tiers?.length > 1 ? combo.tiers : null
-  const addon = combo?.addon
+  const available = combo?.addons ?? []
+  const current = it.addonIds ?? []
 
   const reconfigure = (changes) => {
     if (!combo) return
     const tier = combo.tiers?.find((t) => t.qty === (changes.tierQty ?? it.tierQty)) ?? null
-    const withAddon = changes.addon ?? !!it.addonLabel
-    cart.replace(it.key, toCartItem(combo, { tier, addon: withAddon ? addon : null, variant: it.variant }))
+    let ids = current
+    if (changes.addon) ids = changes.addon.on ? [...current, changes.addon.id] : current.filter((x) => x !== changes.addon.id)
+    cart.replace(it.key, toCartItem(combo, { tier, addons: available.filter((a) => ids.includes(a.id)), variant: it.variant }))
   }
 
   return (
@@ -56,12 +58,16 @@ function CartLine({ it }) {
           ) : (
             it.tierQty && <span className="rounded-md bg-navy px-2 py-1 font-bold text-white">x{it.tierQty} {it.unitLabel}</span>
           )}
-          {addon && it.unitPrice != null && (
-            <label className={`flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 font-bold ${it.addonLabel ? 'bg-rojo text-white' : 'bg-crema text-navy/60'}`}>
-              <input type="checkbox" checked={!!it.addonLabel} onChange={(e) => reconfigure({ addon: e.target.checked })} className="size-3 accent-white" />
-              {addon.label} +{formatPrice(addon.price)}
-            </label>
-          )}
+          {it.unitPrice != null &&
+            available.map((a) => {
+              const on = current.includes(a.id)
+              return (
+                <label key={a.id} className={`flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 font-bold ${on ? 'bg-rojo text-white' : 'bg-crema text-navy/60'}`}>
+                  <input type="checkbox" checked={on} onChange={(e) => reconfigure({ addon: { id: a.id, on: e.target.checked } })} className="size-3 accent-white" />
+                  {a.label} +{formatPrice(a.price)}
+                </label>
+              )
+            })}
         </div>
 
         <div className="mt-2.5 flex items-center justify-between">

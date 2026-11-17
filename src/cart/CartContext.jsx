@@ -19,8 +19,9 @@ const load = () => {
         const combo = getCombo(it.id)
         if (!combo) return null
         const tier = combo.tiers?.find((t) => t.qty === it.tierQty) ?? combo.tiers?.[0] ?? null
-        const addon = it.addonLabel && combo.addon?.label === it.addonLabel ? combo.addon : null
-        return { ...toCartItem(combo, { tier, addon, variant: it.variant }), count: it.count }
+        const ids = it.addonIds ?? (it.addonId ? [it.addonId] : [])
+        const addons = (combo.addons ?? []).filter((a) => ids.includes(a.id))
+        return { ...toCartItem(combo, { tier, addons, variant: it.variant }), count: it.count }
       })
       .filter(Boolean)
   } catch {
@@ -61,19 +62,21 @@ function reducer(items, action) {
 }
 
 /** Convierte la selección de una tarjeta en una línea del carrito. */
-export function toCartItem(combo, { tier, addon, variant }) {
+export function toCartItem(combo, { tier, addons = [], variant }) {
   const basePrice = tier ? tier.price : null
-  const addonPrice = tier && addon ? addon.price : 0
+  const chosen = tier ? addons : []
+  const addonPrice = chosen.reduce((n, a) => n + a.price, 0)
+  const ids = chosen.map((a) => a.id)
   return {
-    key: [combo.id, tier?.qty ?? '', addon?.id ?? '', variant ?? ''].join('|'),
+    key: [combo.id, tier?.qty ?? '', ids.join('+'), variant ?? ''].join('|'),
     id: combo.id,
     name: combo.name,
     image: combo.image,
     pack: !!combo.pack,
     tierQty: tier?.qty ?? null,
     unitLabel: combo.unitLabel ?? null,
-    addonId: addon?.id ?? null,
-    addonLabel: addon?.label ?? null,
+    addonIds: ids,
+    addonLabel: chosen.length ? chosen.map((a) => a.label).join(' y ') : null,
     addonPrice,
     variant: variant ?? null,
     basePrice,

@@ -61,16 +61,18 @@ function CategoryHeader({ cat, index, count, dark }) {
   )
 }
 
-function Grid({ items, compact }) {
+function Grid({ items, compact, highlight }) {
   return (
     <div
-      className={`grid gap-4 ${
-        compact ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5' : 'sm:grid-cols-2 lg:grid-cols-3 lg:gap-6'
+      className={`grid ${
+        compact
+          ? 'grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-8'
+          : 'gap-y-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12'
       }`}
     >
       {items.map((combo, i) => (
         <Reveal key={combo.id} delay={(i % (compact ? 4 : 3)) * 70} className="h-full">
-          <ComboCard combo={combo} variant={compact ? 'compact' : 'default'} />
+          <ComboCard combo={combo} variant={compact ? 'compact' : 'default'} badge={combo.id === highlight ? 'Más pedido' : undefined} />
         </Reveal>
       ))}
     </div>
@@ -78,38 +80,34 @@ function Grid({ items, compact }) {
 }
 
 /* Combos (con contenido) en tarjeta completa; productos sueltos en grilla compacta */
-function Products({ items }) {
+function Products({ items, highlight }) {
   const combos = items.filter((c) => c.includes)
   const loose = items.filter((c) => !c.includes)
   return (
-    <div className="space-y-10">
-      {combos.length > 0 && <Grid items={combos} />}
+    <div className="space-y-14">
+      {combos.length > 0 && <Grid items={combos} highlight={highlight} />}
       {loose.length > 0 && <Grid items={loose} compact />}
     </div>
   )
 }
 
-const BG = ['bg-white', 'bg-crema', 'bg-navy']
+const BG = ['bg-white', 'bg-crema']
 
 function CategorySection({ cat, index }) {
   const all = byCategory(cat.id)
+  // el destacado va primero en la grilla, con su etiqueta
   const hl = cat.highlight ? getCombo(cat.highlight) : null
-  const rest = all.filter((c) => c !== hl)
-  const dark = BG[index % BG.length] === 'bg-navy'
+  const rest = hl ? [hl, ...all.filter((c) => c !== hl)] : all
+  const dark = false
 
   return (
-    <section id={`cat-${cat.id}`} aria-labelledby={`title-${cat.id}`} className={`relative scroll-mt-32 py-16 sm:py-20 ${BG[index % BG.length]}`}>
+    <section id={`cat-${cat.id}`} aria-labelledby={`title-${cat.id}`} className={`relative scroll-mt-32 py-16 sm:py-24 ${BG[index % BG.length]}`}>
       {dark && <div aria-hidden="true" className="dots pointer-events-none absolute inset-0 text-white/[0.04]" />}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <CategoryHeader cat={cat} index={index} count={all.length} dark={dark} />
 
-        {hl && (
-          <Reveal className="mt-10">
-            <ComboCard combo={hl} variant="feature" badge="Más pedido" />
-          </Reveal>
-        )}
 
-        <div className="mt-8">
+        <div className="mt-12">
           {cat.groups ? (
             cat.groups.map((g) => {
               const list = rest.filter((it) => it.group === g)
@@ -121,12 +119,12 @@ function CategorySection({ cat, index }) {
                     {g}
                     <span className={dark ? "text-white/40" : "text-navy/40"}>{list.length}</span>
                   </h4>
-                  <Products items={list} />
+                  <Products items={list} highlight={cat.highlight} />
                 </div>
               )
             })
           ) : (
-            <Products items={rest} />
+            <Products items={rest} highlight={cat.highlight} />
           )}
         </div>
       </div>

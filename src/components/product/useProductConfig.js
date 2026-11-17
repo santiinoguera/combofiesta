@@ -1,22 +1,25 @@
 import { useState } from 'react'
 
-/** Estado de selección de un producto: cantidad (tier), sabor (variant) y agregado (addon). */
+/** Estado de selección de un producto: cantidad (tier), sabor (variant) y agregados (addons). */
 export function useProductConfig(combo) {
   const [tierIdx, setTierIdx] = useState(0)
   const [variantIdx, setVariantIdx] = useState(0)
-  const [withAddon, setWithAddon] = useState(false)
+  const [addonIds, setAddonIds] = useState([])
 
   const priced = Array.isArray(combo.tiers) && combo.tiers.length > 0
   const tier = priced ? combo.tiers[tierIdx] : null
-  const addon = withAddon ? combo.addon : null
+  const addons = (combo.addons ?? []).filter((a) => addonIds.includes(a.id))
   const variant = combo.variants?.[variantIdx] ?? null
-  const total = tier ? tier.price + (addon?.price ?? 0) : null
+  const addonsPrice = addons.reduce((n, a) => n + a.price, 0)
+  const total = tier ? tier.price + addonsPrice : null
   const perUnit = tier?.qty ? Math.round(total / tier.qty) : null
+
+  const toggleAddon = (id, on) => setAddonIds((ids) => (on ? [...new Set([...ids, id])] : ids.filter((x) => x !== id)))
 
   return {
     priced,
     tier,
-    addon,
+    addons,
     variant,
     total,
     perUnit,
@@ -24,8 +27,8 @@ export function useProductConfig(combo) {
     setTierIdx,
     variantIdx,
     setVariantIdx,
-    withAddon,
-    setWithAddon,
-    selection: { tier, addon, variant },
+    addonIds,
+    toggleAddon,
+    selection: { tier, addons, variant },
   }
 }

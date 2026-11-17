@@ -19,7 +19,7 @@
  *  - image:     foto (1200x900 .webp con fondo, o paquete recortado con `pack: true`).
  *               Choris todavía usa el recorte del flyer: REEMPLAZAR cuando haya foto.
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
- *  - addon:     agregado opcional con precio (cheddar o papas pay +$1.000). Se asigna solo por categoría, al final del archivo.
+ *  - addons:    agregados opcionales con precio (cheddar / papas pay, +$1.000 c/u). Se asignan por categoría al final del archivo.
  *  - group:     subgrupo dentro de la categoría (ej. 'Salado' / 'Dulce' en Congelados).
  *  - photo:     true si la imagen es una foto real (se muestra completa sobre su propio fondo desenfocado).
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
@@ -100,7 +100,7 @@ export const categories = [
     id: 'panchos',
     label: 'Panchos',
     title: 'Combos de panchos',
-    tagline: 'Salchichas, pan y aderezos para armar la panchada. Sumale papas pay por $1.000 más a cualquier combo.',
+    tagline: 'Salchichas, pan y aderezos para armar la panchada. Sumale papas pay o cheddar por $1.000 más cada uno.',
     highlight: 'super-panchos-paladini', // producto destacado (tarjeta grande)
     cover: superPanchosPaladini,
   },
@@ -772,8 +772,8 @@ export const promotions = [
 ]
 
 for (const c of combos) {
-  if (c.category === 'hamburguesas') c.addon = CHEDDAR
-  if (c.category === 'panchos') c.addon = PAPAS_PAY
+  if (c.category === 'hamburguesas') c.addons = [CHEDDAR]
+  if (c.category === 'panchos') c.addons = [PAPAS_PAY, CHEDDAR]
 }
 
 export const getCombo = (id) => combos.find((c) => c.id === id)
