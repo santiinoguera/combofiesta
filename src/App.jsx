@@ -6,6 +6,7 @@ import Catalog from './components/Catalog'
 import Promotions from './components/Promotions'
 import Benefits from './components/Benefits'
 import Contact from './components/Contact'
+import Store from './components/Store'
 import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
 import CartDrawer from './components/CartDrawer'
@@ -31,6 +32,7 @@ export default function App() {
         <Promotions />
         <Catalog />
         <Benefits />
+        <Store />
         <Contact />
       </main>
       <Footer />

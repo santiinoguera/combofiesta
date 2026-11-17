@@ -76,6 +76,7 @@ export default function Contact() {
                 <div>
                   <p className="text-xs font-bold tracking-[0.16em] text-navy/50 uppercase">Dónde estamos</p>
                   <p className="mt-1 text-lg font-bold">{site.address ?? `${site.city}, ${site.region}`}</p>
+                  <a href="#local" className="text-sm font-bold text-rojo underline-offset-4 hover:underline">Ver mapa y fotos</a>
                   <p className="text-navy/75">{site.country}</p>
                 </div>
               </li>

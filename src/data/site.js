@@ -26,7 +26,11 @@ export const site = {
     ranges: ['09:30 a 13:00', '16:30 a 20:00'],
   },
 
-  // PENDIENTE: dirección de retiro (si existe), zonas y costo de envío.
-  address: null,
+  // Local físico
+  address: 'Regimiento 11 1066',
+  postalCode: '2000',
+  // Link de Google Maps (búsqueda por dirección). Se usa en "Cómo llegar" y en el mapa.
+  mapsQuery: 'Combo Fiesta, Regimiento 11 1066, Rosario, Santa Fe',
+  // PENDIENTE: zonas y costo de envío.
   deliveryNote: 'Envíos a domicilio en Rosario.',
 }
