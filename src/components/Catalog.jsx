@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
 import ComboCard from './ComboCard'
-import { categories, byCategory } from '../data/combos'
+import { categories, byCategory, getCombo } from '../data/combos'
 
 /* Navegación fija entre categorías con indicador de sección activa */
 function CategoryNav({ active }) {
   const listRef = useRef(null)
   useEffect(() => {
-    // Mantiene visible la pestaña activa en mobile
-    // (solo scroll horizontal de la barra: scrollIntoView cortaría el scroll de la página)
+    // solo scroll horizontal de la barra (scrollIntoView cortaría el scroll de la página)
     const list = listRef.current
     const el = list?.querySelector(`[data-cat="${active}"]`)
     if (list && el && list.scrollWidth > list.clientWidth) {
@@ -17,23 +16,20 @@ function CategoryNav({ active }) {
   }, [active])
 
   return (
-    <nav aria-label="Categorías del catálogo" className="sticky top-[4.5rem] z-30 mt-10 border-y border-navy/5 bg-white/90 backdrop-blur-md">
-      <ul ref={listRef} className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] sm:px-6 lg:px-8">
-        {categories.map((cat) => {
+    <nav aria-label="Categorías del catálogo" className="sticky top-[4.5rem] z-30 border-y border-navy/10 bg-white/95 backdrop-blur-md">
+      <ul ref={listRef} className="mx-auto flex max-w-7xl overflow-x-auto px-2 [scrollbar-width:none] sm:px-6 lg:px-8">
+        {categories.map((cat, i) => {
           const on = cat.id === active
           return (
             <li key={cat.id} data-cat={cat.id} className="shrink-0">
               <a
                 href={`#cat-${cat.id}`}
                 aria-current={on ? 'true' : undefined}
-                className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.95rem] font-bold transition-colors ${
-                  on ? 'bg-navy text-white' : 'bg-crema text-navy/75 hover:bg-crema-deep hover:text-navy'
-                }`}
+                className={`relative flex items-baseline gap-2 px-4 py-4 text-[0.95rem] font-extrabold transition-colors ${on ? 'text-navy' : 'text-navy/45 hover:text-navy'}`}
               >
+                <span className="font-display text-xs text-rojo">{String(i + 1).padStart(2, '0')}</span>
                 {cat.label}
-                <span className={`grid min-w-6 place-items-center rounded-full px-1.5 text-xs ${on ? 'bg-rojo text-white' : 'bg-white text-navy/60'}`}>
-                  {byCategory(cat.id).length}
-                </span>
+                <span className={`absolute inset-x-3 bottom-0 h-[3px] origin-left bg-rojo transition-transform duration-300 ${on ? 'scale-x-100' : 'scale-x-0'}`} />
               </a>
             </li>
           )
@@ -43,54 +39,97 @@ function CategoryNav({ active }) {
   )
 }
 
-function CategorySection({ cat, index }) {
-  const items = byCategory(cat.id)
-  const priced = items.filter((i) => i.tiers).length
+/* Cabecera editorial de cada categoría: número grande, título y portada recortada en diagonal */
+function CategoryHeader({ cat, index, count, dark }) {
   return (
-    <section id={`cat-${cat.id}`} aria-labelledby={`title-${cat.id}`} className="scroll-mt-36 pt-16 first:pt-10 sm:pt-20">
-      {/* Cabecera de la categoría */}
-      <Reveal className="relative overflow-hidden rounded-[2rem] bg-navy text-white">
-        <div className="grid items-center sm:grid-cols-12">
-          <div className="relative z-10 p-7 sm:col-span-6 sm:p-10 lg:col-span-5">
-            <p className="display text-6xl text-celeste/90">{String(index + 1).padStart(2, '0')}</p>
-            <h3 id={`title-${cat.id}`} className="display mt-3 text-[clamp(2.4rem,5vw,3.8rem)]">
-              {cat.title}
-            </h3>
-            <p className="mt-3 max-w-md text-white/75">{cat.tagline}</p>
-            <p className="mt-5 text-sm font-bold text-white/60">
-              {items.length} {items.length === 1 ? 'opción' : 'opciones'}
-              {priced === 0 && ' · precios a consultar'}
-            </p>
-          </div>
-          <div className="relative h-52 sm:col-span-6 sm:h-72 lg:col-span-7">
-            <img src={cat.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
-            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-navy via-navy/10 to-transparent sm:bg-gradient-to-r" />
-          </div>
-        </div>
-      </Reveal>
+    <Reveal className="grid items-end gap-6 lg:grid-cols-12">
+      <div className="lg:col-span-7">
+        <p className={`flex items-center gap-3 text-xs font-extrabold tracking-[0.2em] uppercase ${dark ? 'text-celeste' : 'text-rojo'}`}>
+          <span className="display text-5xl leading-none tracking-normal">{String(index + 1).padStart(2, '0')}</span>
+          <span className={`h-px w-10 ${dark ? 'bg-celeste' : 'bg-rojo'}`} />
+          {count} {count === 1 ? 'opción' : 'opciones'}
+        </p>
+        <h3 id={`title-${cat.id}`} className={`display mt-3 text-[clamp(2.6rem,6.5vw,5rem)] ${dark ? 'text-white' : 'text-navy'}`}>
+          {cat.title}
+        </h3>
+        <p className={`mt-3 max-w-xl text-lg ${dark ? 'text-white/70' : 'text-navy/65'}`}>{cat.tagline}</p>
+      </div>
+      <div className="relative hidden h-40 overflow-hidden lg:col-span-5 lg:block [clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]">
+        <img src={cat.cover} alt="" aria-hidden="true" loading="lazy" decoding="async" className="size-full object-cover" />
+      </div>
+    </Reveal>
+  )
+}
 
-      {(cat.groups ?? [null]).map((g) => {
-        const list = g ? items.filter((it) => it.group === g) : items
-        if (!list.length) return null
-        return (
-          <div key={g ?? 'all'}>
-            {g && (
-              <h4 className="display mt-10 flex items-center gap-3 text-3xl text-navy">
-                <span className={`h-1.5 w-10 rounded-full ${g === 'Dulce' ? 'bg-rojo' : 'bg-celeste'}`} />
-                {g}
-                <span className="font-sans text-sm font-bold text-navy/40">{list.length}</span>
-              </h4>
-            )}
-            <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-              {list.map((combo, i) => (
-                <Reveal key={combo.id} delay={(i % 3) * 80} className="h-full">
-                  <ComboCard combo={combo} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        )
-      })}
+function Grid({ items, compact }) {
+  return (
+    <div
+      className={`grid gap-4 ${
+        compact ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5' : 'sm:grid-cols-2 lg:grid-cols-3 lg:gap-6'
+      }`}
+    >
+      {items.map((combo, i) => (
+        <Reveal key={combo.id} delay={(i % (compact ? 4 : 3)) * 70} className="h-full">
+          <ComboCard combo={combo} variant={compact ? 'compact' : 'default'} />
+        </Reveal>
+      ))}
+    </div>
+  )
+}
+
+/* Combos (con contenido) en tarjeta completa; productos sueltos en grilla compacta */
+function Products({ items }) {
+  const combos = items.filter((c) => c.includes)
+  const loose = items.filter((c) => !c.includes)
+  return (
+    <div className="space-y-10">
+      {combos.length > 0 && <Grid items={combos} />}
+      {loose.length > 0 && <Grid items={loose} compact />}
+    </div>
+  )
+}
+
+const BG = ['bg-white', 'bg-crema', 'bg-navy']
+
+function CategorySection({ cat, index }) {
+  const all = byCategory(cat.id)
+  const hl = cat.highlight ? getCombo(cat.highlight) : null
+  const rest = all.filter((c) => c !== hl)
+  const dark = BG[index % BG.length] === 'bg-navy'
+
+  return (
+    <section id={`cat-${cat.id}`} aria-labelledby={`title-${cat.id}`} className={`relative scroll-mt-32 py-16 sm:py-20 ${BG[index % BG.length]}`}>
+      {dark && <div aria-hidden="true" className="dots pointer-events-none absolute inset-0 text-white/[0.04]" />}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <CategoryHeader cat={cat} index={index} count={all.length} dark={dark} />
+
+        {hl && (
+          <Reveal className="mt-10">
+            <ComboCard combo={hl} variant="feature" badge="Más pedido" />
+          </Reveal>
+        )}
+
+        <div className="mt-8">
+          {cat.groups ? (
+            cat.groups.map((g) => {
+              const list = rest.filter((it) => it.group === g)
+              if (!list.length) return null
+              return (
+                <div key={g} className="mt-10 first:mt-0">
+                  <h4 className={`mb-5 flex items-center gap-3 text-sm font-extrabold tracking-[0.18em] uppercase ${dark ? 'text-white' : 'text-navy'}`}>
+                    <span className={`h-[3px] w-8 ${g === 'Dulce' ? 'bg-rojo' : 'bg-celeste'}`} />
+                    {g}
+                    <span className={dark ? "text-white/40" : "text-navy/40"}>{list.length}</span>
+                  </h4>
+                  <Products items={list} />
+                </div>
+              )
+            })
+          ) : (
+            <Products items={rest} />
+          )}
+        </div>
+      </div>
     </section>
   )
 }
@@ -114,33 +153,35 @@ export default function Catalog() {
   }, [])
 
   return (
-    <section id="catalogo" aria-labelledby="catalog-title" className="relative bg-white pt-24 pb-24 sm:pt-28 sm:pb-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="catalogo" aria-labelledby="catalog-title" className="relative bg-white pt-24 sm:pt-28">
+      <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="grid items-end gap-6 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
             <p className="eyebrow text-rojo">
               <span className="h-0.5 w-8 bg-rojo" /> Catálogo completo
             </p>
             <h2 id="catalog-title" className="display mt-4 text-[clamp(3rem,8vw,6rem)] text-navy">
-              Todo el <span className="text-celeste">catálogo</span>
+              Armá tu <span className="text-celeste">pedido</span>
             </h2>
           </Reveal>
           <Reveal delay={100} className="lg:col-span-5">
-            <p className="text-lg leading-relaxed text-navy/70">
-              Tocá un producto para verlo en grande, elegí cantidad o sabor y sumalo al carrito. Al finalizar, el
-              pedido completo te llega armado a WhatsApp.
-            </p>
+            <ol className="grid grid-cols-3 gap-3 text-sm">
+              {['Elegí el combo', 'Marcá la cantidad', 'Sumalo y pedí'].map((t, i) => (
+                <li key={t} className="border-t-2 border-navy pt-2 font-bold text-navy/80">
+                  <span className="display block text-2xl text-rojo">{i + 1}</span>
+                  {t}
+                </li>
+              ))}
+            </ol>
           </Reveal>
         </div>
       </div>
 
       <CategoryNav active={active} />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {categories.map((cat, i) => (
-          <CategorySection key={cat.id} cat={cat} index={i} />
-        ))}
-      </div>
+      {categories.map((cat, i) => (
+        <CategorySection key={cat.id} cat={cat} index={i} />
+      ))}
     </section>
   )
 }

@@ -1,3 +1,4 @@
+import { getCombo } from '../data/combos'
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 
 /**
@@ -11,7 +12,17 @@ const load = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     const data = raw ? JSON.parse(raw) : []
-    return Array.isArray(data) ? data : []
+    if (!Array.isArray(data)) return []
+    // Se recalcula cada línea con el catálogo vigente (precios actualizados; se descartan productos que ya no existen).
+    return data
+      .map((it) => {
+        const combo = getCombo(it.id)
+        if (!combo) return null
+        const tier = combo.tiers?.find((t) => t.qty === it.tierQty) ?? combo.tiers?.[0] ?? null
+        const addon = it.addonLabel && combo.addon?.label === it.addonLabel ? combo.addon : null
+        return { ...toCartItem(combo, { tier, addon, variant: it.variant }), count: it.count }
+      })
+      .filter(Boolean)
   } catch {
     return []
   }
@@ -28,6 +39,18 @@ function reducer(items, action) {
       return items
         .map((it) => (it.key === action.key ? { ...it, count: action.count } : it))
         .filter((it) => it.count > 0)
+    case 'replace': {
+      // Cambia la configuración de una línea (cantidad del combo o adicional) y la fusiona si ya existe.
+      const old = items.find((it) => it.key === action.key)
+      if (!old) return items
+      const next = { ...action.item, count: old.count }
+      const rest = items.filter((it) => it.key !== action.key)
+      const j = rest.findIndex((it) => it.key === next.key)
+      if (j !== -1) return rest.map((it, k) => (k === j ? { ...it, count: it.count + next.count } : it))
+      const idx = items.findIndex((it) => it.key === action.key)
+      rest.splice(idx, 0, next)
+      return rest
+    }
     case 'remove':
       return items.filter((it) => it.key !== action.key)
     case 'clear':
@@ -39,7 +62,8 @@ function reducer(items, action) {
 
 /** Convierte la selección de una tarjeta en una línea del carrito. */
 export function toCartItem(combo, { tier, addon, variant }) {
-  const unitPrice = tier ? tier.price + (addon?.price ?? 0) : null
+  const basePrice = tier ? tier.price : null
+  const addonPrice = tier && addon ? addon.price : 0
   return {
     key: [combo.id, tier?.qty ?? '', addon?.id ?? '', variant ?? ''].join('|'),
     id: combo.id,
@@ -48,9 +72,12 @@ export function toCartItem(combo, { tier, addon, variant }) {
     pack: !!combo.pack,
     tierQty: tier?.qty ?? null,
     unitLabel: combo.unitLabel ?? null,
+    addonId: addon?.id ?? null,
     addonLabel: addon?.label ?? null,
+    addonPrice,
     variant: variant ?? null,
-    unitPrice,
+    basePrice,
+    unitPrice: basePrice != null ? basePrice + addonPrice : null,
   }
 }
 
@@ -75,17 +102,21 @@ export function CartProvider({ children }) {
   const value = useMemo(() => {
     const count = items.reduce((n, it) => n + it.count, 0)
     const total = items.reduce((n, it) => n + (it.unitPrice ?? 0) * it.count, 0)
+    const addonsTotal = items.reduce((n, it) => n + (it.addonPrice ?? 0) * it.count, 0)
     const hasUnpriced = items.some((it) => it.unitPrice == null)
     return {
       items,
       count,
       total,
+      addonsTotal,
+      subtotal: total - addonsTotal,
       hasUnpriced,
       open,
       pulse,
       add,
       setCount: (key, n) => dispatch({ type: 'set', key, count: n }),
       remove: (key) => dispatch({ type: 'remove', key }),
+      replace: (key, item) => dispatch({ type: 'replace', key, item }),
       clear: () => dispatch({ type: 'clear' }),
       openCart: () => setOpen(true),
       closeCart: () => setOpen(false),

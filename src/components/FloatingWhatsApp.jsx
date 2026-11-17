@@ -6,7 +6,16 @@ import { whatsappLink } from '../lib/whatsapp'
 export default function FloatingWhatsApp() {
   const [show, setShow] = useState(false)
   useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.7)
+    // En celulares se oculta dentro del catálogo para no tapar selectores ni botones (se compra con el carrito).
+    const onScroll = () => {
+      let inCatalog = false
+      const cat = document.getElementById('catalogo')
+      if (cat && window.innerWidth < 640) {
+        const r = cat.getBoundingClientRect()
+        inCatalog = r.top < window.innerHeight && r.bottom > 0
+      }
+      setShow(window.scrollY > window.innerHeight * 0.7 && !inCatalog)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)

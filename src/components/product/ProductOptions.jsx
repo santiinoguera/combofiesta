@@ -1,16 +1,17 @@
 import { formatPrice } from '../../lib/format'
+import QuantitySelector from './QuantitySelector'
 
-/* Selector accesible de opciones (cantidad o sabor) */
-function Chips({ legend, name, options, value, onChange, render }) {
+/* Chips accesibles (sabores) */
+function Chips({ legend, name, options, value, onChange }) {
   return (
     <fieldset>
-      <legend className="mb-2 text-xs font-bold tracking-[0.14em] text-navy/50 uppercase">{legend}</legend>
+      <legend className="mb-2 text-[0.7rem] font-extrabold tracking-[0.16em] text-navy/50 uppercase">{legend}</legend>
       <div className="flex flex-wrap gap-1.5">
         {options.map((opt, i) => (
-          <label key={i} className="relative cursor-pointer">
+          <label key={opt} className="cursor-pointer">
             <input type="radio" name={name} checked={i === value} onChange={() => onChange(i)} className="peer sr-only" />
-            <span className="block rounded-xl border-2 border-navy/10 px-3 py-1.5 text-sm font-bold text-navy/70 transition-[color,background-color,border-color,transform] peer-checked:scale-105 peer-checked:border-navy peer-checked:bg-navy peer-checked:text-white peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo hover:border-navy/40 active:scale-95">
-              {render(opt)}
+            <span className="block rounded-md border border-navy/15 px-2.5 py-1.5 text-sm font-bold text-navy/70 transition-colors peer-checked:border-navy peer-checked:bg-navy peer-checked:text-white peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo hover:border-navy/50">
+              {opt}
             </span>
           </label>
         ))}
@@ -19,60 +20,74 @@ function Chips({ legend, name, options, value, onChange, render }) {
   )
 }
 
-/** Opciones + precio de un producto. `cfg` viene de useProductConfig. */
-export default function ProductOptions({ combo, cfg, uid }) {
-  const { priced, tier, total, perUnit } = cfg
+/** Aviso de promo con interruptor: "Por $1.000 más te llevás un cheddar". */
+export function AddonToggle({ addon, checked, onChange }) {
+  return (
+    <label
+      className={`group/addon flex cursor-pointer items-center gap-3 border-l-4 py-2.5 pr-3 pl-3 transition-colors ${
+        checked ? 'border-rojo bg-rojo/10' : 'border-[#F5B400] bg-[#FFF6DB] hover:bg-[#FFEFC2]'
+      }`}
+    >
+      <img src={addon.image} alt="" aria-hidden="true" className="size-10 shrink-0 rounded-md object-cover" />
+      <span className="min-w-0 flex-1 text-sm leading-tight font-bold text-navy">
+        {addon.tag}
+        <span className="block text-xs font-semibold text-navy/60">{checked ? 'Agregado a este combo' : 'Tocá para sumarlo'}</span>
+      </span>
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="peer sr-only" />
+      <span
+        aria-hidden="true"
+        className="relative h-7 w-12 shrink-0 rounded-full bg-navy/20 transition-colors peer-checked:bg-rojo peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5"
+      />
+    </label>
+  )
+}
+
+/** Precio grande + detalle (cantidad, por unidad, adicional). */
+export function PriceBlock({ combo, cfg, size = 'md' }) {
+  const { priced, tier, total, perUnit, addon } = cfg
+  if (!priced) return <p className="display text-[1.8rem] leading-none text-navy/70">Consultá precio</p>
+  return (
+    <div className="flex items-end justify-between gap-3" aria-live="polite">
+      <p>
+        <span className="sr-only">Precio: </span>
+        <span key={total} className={`display block animate-price-pop leading-none text-rojo ${size === 'lg' ? 'text-[3.4rem]' : 'text-[2.6rem]'}`}>
+          {formatPrice(total)}
+        </span>
+        {tier.qty && (
+          <span className="mt-1 block text-xs font-bold text-navy/60">
+            {tier.qty} {combo.unitLabel ?? 'unidades'}
+            {addon && ` + ${addon.label}`}
+          </span>
+        )}
+      </p>
+      {perUnit && (
+        <p className="pb-0.5 text-right leading-tight">
+          <span className="block text-base font-extrabold text-navy">{formatPrice(perUnit)}</span>
+          <span className="text-[0.7rem] font-bold tracking-wide text-navy/50 uppercase">por unidad</span>
+        </p>
+      )}
+    </div>
+  )
+}
+
+/** Opciones de compra de un producto. `cfg` viene de useProductConfig. */
+export default function ProductOptions({ combo, cfg, uid, size = 'md' }) {
   return (
     <div className="space-y-4">
-      {combo.variants && (
-        <Chips legend="Sabor" name={`${uid}-v`} options={combo.variants} value={cfg.variantIdx} onChange={cfg.setVariantIdx} render={(v) => v} />
-      )}
+      {combo.variants && <Chips legend="Sabor" name={`${uid}-v`} options={combo.variants} value={cfg.variantIdx} onChange={cfg.setVariantIdx} />}
 
-      {priced && combo.tiers.length > 1 && (
-        <Chips legend="Cantidad" name={`${uid}-q`} options={combo.tiers} value={cfg.tierIdx} onChange={cfg.setTierIdx} render={(t) => `x${t.qty}`} />
+      {cfg.priced && combo.tiers.length > 1 && (
+        <QuantitySelector tiers={combo.tiers} value={cfg.tierIdx} onChange={cfg.setTierIdx} unitLabel={combo.unitLabel} size={size} />
       )}
-      {priced && combo.tiers.length === 1 && tier.qty && (
-        <p className="text-xs font-bold tracking-[0.14em] text-navy/50 uppercase">
-          Combo x{tier.qty} {combo.unitLabel}
+      {cfg.priced && combo.tiers.length === 1 && cfg.tier.qty && (
+        <p className="inline-block bg-crema px-2.5 py-1 text-xs font-extrabold tracking-[0.12em] text-navy/70 uppercase">
+          Combo x{cfg.tier.qty} {combo.unitLabel}
         </p>
       )}
 
-      {combo.addon && (
-        <label className="flex cursor-pointer items-center justify-between gap-3 rounded-2xl bg-[#FFF4D6] px-4 py-3 ring-1 ring-[#F5B400]/40 transition-colors hover:bg-[#FFEDBD]">
-          <span className="flex items-center gap-2.5">
-            <img src={combo.addon.image} alt="" aria-hidden="true" className="size-9 object-contain" />
-            <span className="text-sm leading-tight font-bold text-navy">
-              Sumale {combo.addon.label}
-              <span className="block text-xs font-semibold text-navy/60">+{formatPrice(combo.addon.price)}</span>
-            </span>
-          </span>
-          <input type="checkbox" checked={cfg.withAddon} onChange={(e) => cfg.setWithAddon(e.target.checked)} className="peer sr-only" />
-          <span
-            aria-hidden="true"
-            className="relative h-7 w-12 shrink-0 rounded-full bg-navy/15 transition-colors peer-checked:bg-rojo peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5"
-          />
-        </label>
-      )}
+      {combo.addon && <AddonToggle addon={combo.addon} checked={cfg.withAddon} onChange={cfg.setWithAddon} />}
 
-      <div className="flex items-end justify-between gap-3 border-t border-dashed border-navy/15 pt-4">
-        {priced ? (
-          <p aria-live="polite">
-            <span className="sr-only">Precio: </span>
-            <span key={total} className="display block animate-price-pop text-[2.6rem] text-rojo">
-              {formatPrice(total)}
-            </span>
-          </p>
-        ) : (
-          <p className="display text-[2rem] text-navy/80">Consultá precio</p>
-        )}
-        {perUnit && (
-          <p className="pb-1 text-right text-xs leading-tight font-semibold text-navy/55">
-            {formatPrice(perUnit)}
-            <br />
-            por unidad
-          </p>
-        )}
-      </div>
+      <PriceBlock combo={combo} cfg={cfg} size={size} />
     </div>
   )
 }

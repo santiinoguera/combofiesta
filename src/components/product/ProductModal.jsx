@@ -26,7 +26,7 @@ export default function ProductModal({ combo, onClose }) {
       onClose={onClose}
       onClick={(e) => e.target === ref.current && ref.current.close()}
       aria-labelledby={`${uid}-t`}
-      className="m-auto max-h-[92dvh] w-[min(64rem,calc(100%-1.5rem))] overflow-hidden rounded-[2rem] bg-white p-0 text-navy shadow-lift backdrop:bg-navy/60 backdrop:backdrop-blur-sm open:animate-dialog-in"
+      className="m-auto max-h-[92dvh] w-[min(64rem,calc(100%-1.5rem))] overflow-hidden rounded-xl bg-white p-0 text-navy shadow-lift backdrop:bg-navy/60 backdrop:backdrop-blur-sm open:animate-dialog-in"
     >
       <div className="grid max-h-[92dvh] overflow-y-auto md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div className="group relative min-w-0 overflow-hidden">
@@ -65,7 +65,7 @@ export default function ProductModal({ combo, onClose }) {
           )}
 
           <div className="mt-6">
-            <ProductOptions combo={combo} cfg={cfg} uid={uid} />
+            <ProductOptions combo={combo} cfg={cfg} uid={uid} size="lg" />
           </div>
 
           <div className="mt-6 flex items-center gap-3">

@@ -48,7 +48,9 @@ import snacks6 from '../assets/img/snacks-6.webp'
 import landyMani from '../assets/img/landy-mani.webp'
 import catCongelados from '../assets/img/cat-congelados.webp'
 import catSalados from '../assets/img/cat-salados.webp'
-import cheddarImg from '../assets/img/promo/cheddar.svg'
+import cheddarImg from '../assets/img/promo/cheddar-danica.webp'
+import promoCheddar from '../assets/img/promo/promo-cheddar.webp'
+import promoPapasPay from '../assets/img/promo/promo-papas-pay.webp'
 import papasPayImg from '../assets/img/promo/papas-pay.webp'
 import glVeggies from '../assets/img/products/gl-veggies.webp'
 import glAcelga from '../assets/img/products/gl-acelga.webp'
@@ -82,6 +84,7 @@ import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradiciona
 /**
  * CATEGORÍAS — el orden de este array es el orden del catálogo en la web.
  *  - label: nombre corto (menú y pestañas). title: título grande de la sección.
+ *  - highlight: id del producto que se muestra en grande al comienzo de la sección (opcional).
  *  - tagline: bajada de la sección. cover: imagen de portada de la categoría.
  */
 export const categories = [
@@ -90,6 +93,7 @@ export const categories = [
     label: 'Hamburguesas',
     title: 'Combos de hamburguesas',
     tagline: 'Medallones de las mejores marcas con pan artesanal y aderezos. Sumales cheddar por $1.000 más.',
+    highlight: 'la-muneca-120', // producto destacado (tarjeta grande)
     cover: burgerMuneca120,
   },
   {
@@ -97,6 +101,7 @@ export const categories = [
     label: 'Panchos',
     title: 'Combos de panchos',
     tagline: 'Salchichas, pan y aderezos para armar la panchada. Sumale papas pay por $1.000 más a cualquier combo.',
+    highlight: 'super-panchos-paladini', // producto destacado (tarjeta grande)
     cover: superPanchosPaladini,
   },
   {
@@ -104,6 +109,7 @@ export const categories = [
     label: 'Choris',
     title: 'Combos de choris',
     tagline: 'Choripanes Paladini con panes y aderezos, por encargo.',
+    highlight: 'combo-especial-choris', // producto destacado (tarjeta grande)
     cover: choripan,
   },
   {
@@ -128,8 +134,9 @@ export const CHEDDAR = {
   id: 'cheddar',
   label: 'cheddar',
   price: 1000,
-  image: cheddarImg, // REEMPLAZAR por foto real del cheddar si se dispone
-  tag: '¡Por $1.000 más te lo llevás con cheddar!',
+  image: cheddarImg, // ícono del agregado (salsa cheddar Dánica)
+  promo: promoCheddar, // placa promocional que se muestra sobre la foto del combo
+  tag: 'Por $1.000 más te llevás un cheddar',
 }
 
 /** PROMO: papas pay en los combos de panchos y super panchos. Para cambiar el precio, editá `price`. */
@@ -137,8 +144,9 @@ export const PAPAS_PAY = {
   id: 'papas-pay',
   label: 'papas pay',
   price: 1000,
-  image: papasPayImg, // REEMPLAZAR por la foto del paquete de papas pay que se entrega
-  tag: '¡Por $1.000 más sumale papas pay!',
+  image: papasPayImg, // ícono del agregado (papas pay Oasis)
+  promo: promoPapasPay, // placa promocional que se muestra sobre la foto del combo
+  tag: 'Por $1.000 más te llevás unas papas pay',
 }
 
 const BURGER_INCLUDES = ['Medallones', 'Pan artesanal', 'Aderezos']
