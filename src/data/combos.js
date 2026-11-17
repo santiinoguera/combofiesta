@@ -636,7 +636,7 @@ export const combos = [
     description: 'Papas prefritas bastón, pack XS. Libres de gluten.',
     tiers: [{ qty: null, price: 3900 }],
     image: mccainClasicas,
-    photo: true,
+    pack: true,
   },
   {
     id: 'mccain-smiles',
@@ -720,7 +720,7 @@ export const combos = [
     description: 'Dos medallones de pollo rebozados, al horno o fritos.',
     tiers: [{ qty: null, price: 2900 }],
     image: paladiniMedallonesPollo,
-    photo: true,
+    pack: true,
   },
   {
     id: 'vegetalex-burger',
@@ -732,7 +732,7 @@ export const combos = [
     description: 'Hamburguesas con ingredientes de origen vegetal, 2 de 113 g.',
     tiers: [{ qty: null, price: 6900 }],
     image: vegetalexBurger,
-    photo: true,
+    pack: true,
   },
 ]
 
