@@ -10,8 +10,11 @@ import Footer from './components/Footer'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
 import CartDrawer from './components/CartDrawer'
 import { CartProvider } from './cart/CartContext'
+import { useEffect } from 'react'
+import { installHashLinks } from './lib/scrollToHash'
 
 export default function App() {
+  useEffect(() => installHashLinks(), [])
   return (
     <CartProvider>
       <a

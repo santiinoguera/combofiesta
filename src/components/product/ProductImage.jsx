@@ -3,13 +3,11 @@
  *  - pack:  paquete recortado, centrado sobre un círculo celeste.
  *  - photo: foto real completa sobre su propio fondo desenfocado (sin recortar el paquete).
  *  - por defecto: composición del combo que ocupa todo el recuadro.
- * Si el producto tiene `addon` con `promo` (cheddar / papas pay), muestra la placa promocional
- * chica en la esquina superior derecha, sobre la zona libre de la composición.
+ * Las promos (cheddar / papas pay) no se dibujan sobre la foto: van en el aviso debajo del combo.
  */
 export default function ProductImage({ combo, large = false, className = '', badge }) {
   const anim = 'transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none'
   const loading = large ? 'eager' : 'lazy'
-  const promo = combo.addon?.promo
   return (
     <div className={`relative aspect-[4/3] overflow-hidden bg-crema ${className}`}>
       {combo.pack ? (
@@ -46,17 +44,6 @@ export default function ProductImage({ combo, large = false, className = '', bad
         <span className="absolute top-0 left-0 bg-rojo px-3 py-1.5 text-[0.7rem] font-extrabold tracking-[0.14em] text-white uppercase">{badge}</span>
       )}
 
-      {promo && (
-        <img
-          src={promo}
-          alt={combo.addon.tag}
-          loading={loading}
-          decoding="async"
-          className={`promo-badge absolute top-2 right-2 rotate-3 rounded-md shadow-[0_10px_24px_-8px_rgb(23_38_56/0.6)] ring-2 ring-white transition-transform duration-300 group-hover:rotate-0 ${
-            large ? 'w-[30%]' : 'w-[33%]'
-          }`}
-        />
-      )}
     </div>
   )
 }

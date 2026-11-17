@@ -57,7 +57,7 @@ export default function ComboCard({ combo, variant = 'default', badge }) {
 
   const imageButton = (cls, large = false) => (
     <button type="button" onClick={open} className={`group/img relative block w-full text-left ${cls}`} aria-label={`Ver detalle de ${combo.name}`}>
-      <ProductImage combo={combo} large={large} badge={badge} className="h-full" />
+      <ProductImage combo={combo} large={large} badge={badge} className="w-full" />
       <span className="absolute bottom-3 left-3 grid size-10 translate-y-2 place-items-center rounded-full bg-white/95 text-navy opacity-0 shadow-soft transition-[opacity,transform] duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <ExpandIcon className="size-5" />
       </span>
@@ -97,7 +97,7 @@ export default function ComboCard({ combo, variant = 'default', badge }) {
   if (variant === 'feature') {
     return (
       <article className="group grid overflow-hidden rounded-md bg-white shadow-soft ring-1 ring-navy/10 lg:grid-cols-12">
-        {imageButton('lg:col-span-7 [&>div]:lg:aspect-auto [&>div]:lg:min-h-full', true)}
+        {imageButton('bg-crema lg:col-span-7 lg:flex lg:items-center', true)}
         <div className="flex flex-col gap-4 p-6 sm:p-8 lg:col-span-5">
           <Meta combo={combo} />
           <h3 className="display text-[clamp(2.2rem,4vw,3.2rem)] text-balance text-navy">
