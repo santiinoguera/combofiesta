@@ -59,10 +59,8 @@ import glPrimavera from '../assets/img/products/gl-primavera.webp'
 import simplotPapas from '../assets/img/products/simplot-papas.webp'
 import swiftBocaditos from '../assets/img/products/swift-bocaditos.webp'
 import glFrutillas from '../assets/img/products/gl-frutillas.webp'
-import glFrambuesas from '../assets/img/products/gl-frambuesas.webp'
 import glArandanos from '../assets/img/products/gl-arandanos.webp'
 import glMixBerries from '../assets/img/products/gl-mixberries.webp'
-import glMoras from '../assets/img/products/gl-moras.webp'
 import bembrasilNoisette from '../assets/img/products/bembrasil-noisette.webp'
 import bembrasilCarinhas from '../assets/img/products/bembrasil-carinhas.webp'
 import mccainSmiles from '../assets/img/products/mccain-smiles.webp'
@@ -566,18 +564,6 @@ export const combos = [
     pack: true,
   },
   {
-    id: 'green-life-frambuesas',
-    category: 'congelados',
-    group: 'Dulce',
-    name: 'Frambuesas Green Life 400 g',
-    brand: 'Green Life',
-    weight: '400 g',
-    description: 'Frambuesas enteras, listas para consumir.',
-    tiers: null,
-    image: glFrambuesas,
-    pack: true,
-  },
-  {
     id: 'green-life-mix-berries',
     category: 'congelados',
     group: 'Dulce',
@@ -599,18 +585,6 @@ export const combos = [
     description: 'Arándanos listos para consumir.',
     tiers: [{ qty: null, price: 6900 }],
     image: glArandanos,
-    pack: true,
-  },
-  {
-    id: 'green-life-moras',
-    category: 'congelados',
-    group: 'Dulce',
-    name: 'Moras Green Life 550 g',
-    weight: '550 g',
-    brand: 'Green Life',
-    description: 'Moras listas para consumir.',
-    tiers: null,
-    image: glMoras,
     pack: true,
   },
 
