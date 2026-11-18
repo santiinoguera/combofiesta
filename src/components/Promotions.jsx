@@ -118,8 +118,16 @@ export default function Promotions() {
   const tones = ['white', 'crema', 'white']
 
   return (
-    <section id="promociones" aria-labelledby="promos-title" className="relative overflow-hidden bg-celeste py-24 text-navy sm:py-32">
-      <div aria-hidden="true" className="dots absolute inset-0 text-white/30" />
+    <section id="promociones" aria-labelledby="promos-title" className="relative overflow-hidden bg-celeste pt-32 pb-36 text-navy sm:pt-40 sm:pb-44">
+      {/* transición suave con la sección blanca de arriba y de abajo: onda + difuminado */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white via-white/40 to-transparent" />
+      <svg aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -top-px h-12 w-full text-white sm:h-20">
+        <path fill="currentColor" d="M0 0h1440v38c-120 28-260 46-420 40-190-7-300-48-500-46C330 34 150 70 0 58Z" />
+      </svg>
+      <div aria-hidden="true" className="dots absolute inset-0 text-white/30 [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_82%,transparent)]" />
+      <svg aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-px h-12 w-full rotate-180 text-white sm:h-20">
+        <path fill="currentColor" d="M0 0h1440v38c-120 28-260 46-420 40-190-7-300-48-500-46C330 34 150 70 0 58Z" />
+      </svg>
       <div aria-hidden="true" className="absolute -top-40 -right-40 size-[32rem] rounded-full bg-white/30 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
