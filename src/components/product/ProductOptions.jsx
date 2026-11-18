@@ -25,24 +25,24 @@ function Chips({ legend, name, options, value, onChange }) {
  * Agregados opcionales (cheddar, papas pay): botones que se activan/desactivan.
  * Cada uno suma su precio al combo.
  */
-export function AddonPicker({ addons, selected, onToggle }) {
+export function AddonPicker({ addons, selected, onToggle, legend = 'Sumale', grid = false }) {
   return (
     <fieldset>
-      <legend className="mb-2 text-[0.68rem] font-extrabold tracking-[0.16em] text-navy/45 uppercase">Sumale</legend>
-      <div className="flex flex-wrap gap-2">
+      <legend className="mb-2 text-[0.68rem] font-extrabold tracking-[0.16em] text-navy/45 uppercase">{legend}</legend>
+      <div className={grid ? 'grid grid-cols-2 gap-1.5' : 'flex flex-wrap gap-2'}>
         {addons.map((a) => {
           const on = selected.includes(a.id)
           return (
             <label key={a.id} className="cursor-pointer">
               <input type="checkbox" checked={on} onChange={(e) => onToggle(a.id, e.target.checked)} className="peer sr-only" />
               <span
-                className={`flex items-center gap-2 rounded-full border py-1 pr-3 pl-1 text-sm font-bold transition-colors peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo ${
+                className={`flex items-center gap-2 rounded-full border py-1 pr-2 pl-1 text-sm font-bold transition-colors peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo ${
                   on ? 'border-rojo bg-rojo text-white' : 'border-navy/15 bg-white text-navy hover:border-navy/40'
                 }`}
               >
                 <img src={a.image} alt="" aria-hidden="true" className="size-7 rounded-full bg-crema object-cover" />
-                <span className="inline-block first-letter:uppercase">{a.label}</span>
-                <span className={`text-xs ${on ? 'text-white/80' : 'text-navy/50'}`}>+{formatPrice(a.price)}</span>
+                <span className="inline-block flex-1 whitespace-nowrap first-letter:uppercase">{a.short ?? a.label}</span>
+                {grid ? <span className="sr-only">+{formatPrice(a.price)}</span> : <span className={`text-xs ${on ? 'text-white/80' : 'text-navy/50'}`}>+{formatPrice(a.price)}</span>}
                 <span className={`grid size-5 place-items-center rounded-full ${on ? 'bg-white text-rojo' : 'bg-crema text-navy/60'}`}>
                   {on ? <CheckIcon className="size-3" /> : <PlusIcon className="size-3" />}
                 </span>
@@ -120,7 +120,19 @@ export default function ProductOptions({ combo, cfg, uid, size = 'md' }) {
 
       {combo.sauces && <SaucePicker sauces={combo.sauces} value={cfg.sauceIdx} onChange={cfg.setSauceIdx} name={`${uid}-s`} />}
 
-      {cfg.priced && combo.addons?.length > 0 && <AddonPicker addons={combo.addons} selected={cfg.addonIds} onToggle={cfg.toggleAddon} />}
+      {cfg.priced && combo.addons?.some((a) => a.kind === 'sauce') && (
+        <AddonPicker
+          legend="Sumá más aderezos · $1.000 c/u"
+          grid
+          addons={combo.addons.filter((a) => a.kind === 'sauce')}
+          selected={cfg.addonIds}
+          onToggle={cfg.toggleAddon}
+        />
+      )}
+
+      {cfg.priced && combo.addons?.some((a) => a.kind !== 'sauce') && (
+        <AddonPicker addons={combo.addons.filter((a) => a.kind !== 'sauce')} selected={cfg.addonIds} onToggle={cfg.toggleAddon} />
+      )}
 
       <PriceBlock combo={combo} cfg={cfg} size={size} />
     </div>

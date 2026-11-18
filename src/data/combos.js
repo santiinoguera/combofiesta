@@ -183,6 +183,16 @@ export const SAUCES = [
   { id: 'salsa-golf', label: 'Salsa golf', image: sauceGolf },
 ]
 
+/** ADEREZOS EXTRA: además del incluido, se pueden sumar otros por $1.000 c/u. */
+export const EXTRA_SAUCES = SAUCES.map((sc) => ({
+  id: `extra-${sc.id}`,
+  kind: 'sauce',
+  label: `${sc.label.toLowerCase()} extra`,
+  short: sc.label,
+  price: 1000,
+  image: sc.image,
+}))
+
 const BURGER_INCLUDES = ['Medallones', 'Pan artesanal', 'Aderezos']
 const tiers = (prices) => [12, 24, 36, 48, 60].map((qty, i) => ({ qty, price: prices[i] }))
 
@@ -928,7 +938,10 @@ export const promotions = [
 for (const c of combos) {
   if (c.category === 'hamburguesas') c.addons = [CHEDDAR, CHEDDAR_KG]
   if (c.category === 'panchos') c.addons = [PAPAS_PAY, CHEDDAR, CHEDDAR_KG]
-  if (['hamburguesas', 'panchos', 'choris'].includes(c.category)) c.sauces = SAUCES
+  if (['hamburguesas', 'panchos', 'choris'].includes(c.category) && c.includes) {
+    c.sauces = SAUCES
+    c.addons = [...(c.addons ?? []), ...EXTRA_SAUCES]
+  }
   if (c.category === 'hamburguesas') c.bread = PAN_HAMBURGUESA
   if (c.id.startsWith('super-panchos')) c.bread = PAN_SUPER_PANCHOS
 }
