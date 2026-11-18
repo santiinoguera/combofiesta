@@ -12,6 +12,7 @@ export const describeItem = (it) =>
     it.tierQty ? `x${it.tierQty}` : null,
     it.addonLabel ? `con ${it.addonLabel}` : null,
     it.variant ? `(sabor ${it.variant})` : null,
+    it.sauce ? `· aderezo: ${it.sauce}` : null,
   ]
     .filter(Boolean)
     .join(' ')

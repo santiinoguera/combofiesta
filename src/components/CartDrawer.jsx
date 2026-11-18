@@ -18,7 +18,7 @@ function CartLine({ it }) {
     const tier = combo.tiers?.find((t) => t.qty === (changes.tierQty ?? it.tierQty)) ?? null
     let ids = current
     if (changes.addon) ids = changes.addon.on ? [...current, changes.addon.id] : current.filter((x) => x !== changes.addon.id)
-    cart.replace(it.key, toCartItem(combo, { tier, addons: available.filter((a) => ids.includes(a.id)), variant: it.variant }))
+    cart.replace(it.key, toCartItem(combo, { tier, addons: available.filter((a) => ids.includes(a.id)), variant: it.variant, sauce: it.sauce }))
   }
 
   return (
@@ -31,6 +31,7 @@ function CartLine({ it }) {
           <p className="leading-tight font-extrabold">
             {it.name}
             {it.variant && <span className="block text-xs font-semibold text-navy/60">Sabor {it.variant}</span>}
+            {it.sauce && <span className="block text-xs font-semibold text-navy/60">Aderezo: {it.sauce}</span>}
           </p>
           <button type="button" onClick={() => cart.remove(it.key)} aria-label={`Quitar ${it.name}`} className="-mt-1 -mr-1 grid size-8 shrink-0 place-items-center rounded-md text-navy/40 hover:bg-rojo/10 hover:text-rojo">
             <TrashIcon className="size-4" />

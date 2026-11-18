@@ -22,6 +22,7 @@
  *  - addons:    agregados opcionales con precio (cheddar / papas pay, +$1.000 c/u). Se asignan por categoría al final del archivo.
  *  - group:     'Salado' o 'Dulce' (Congelados): ordena la sección, salados primero y dulces al final.
  *  - photo:     true si la imagen es una foto real (se muestra completa sobre su propio fondo desenfocado).
+ *  - sauces:    aderezos a elección incluidos (se asignan al final del archivo).
  *  - bread:     foto real del pan que se entrega (se asigna al final del archivo).
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
  *
@@ -85,6 +86,10 @@ import snkPehuamarPapas from '../assets/img/products/pehuamar-papas.webp'
 import snkLandyChizitos from '../assets/img/products/landy.webp'
 import snkCracketPay from '../assets/img/products/cracket-papas-pay.webp'
 import snkLandyPalitos from '../assets/img/products/landy-palitos-1kg.webp'
+import sauceMayo from '../assets/img/promo/sauce-mayo.webp'
+import sauceKetchup from '../assets/img/promo/sauce-ketchup.webp'
+import sauceMostaza from '../assets/img/promo/sauce-mostaza.webp'
+import sauceGolf from '../assets/img/promo/sauce-golf.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -159,6 +164,23 @@ export const PAPAS_PAY = {
 /** Foto real del pan que se entrega (se muestra en la vista ampliada del combo). */
 const PAN_HAMBURGUESA = { image: panRealHamburguesa, caption: 'Pan para hamburguesas' }
 const PAN_SUPER_PANCHOS = { image: panRealPanchos, caption: 'Pan para super panchos' }
+
+/** PROMO: cheddar de 1 kg. */
+export const CHEDDAR_KG = {
+  id: 'cheddar-kg',
+  label: 'cheddar 1 kg',
+  price: 5900,
+  image: cheddarImg,
+  tag: 'Por $5.900 te llevás un cheddar de 1 kg',
+}
+
+/** ADEREZOS a elección (incluidos en el combo, sin costo). */
+export const SAUCES = [
+  { id: 'mayonesa', label: 'Mayonesa', image: sauceMayo },
+  { id: 'ketchup', label: 'Ketchup', image: sauceKetchup },
+  { id: 'mostaza', label: 'Mostaza', image: sauceMostaza },
+  { id: 'salsa-golf', label: 'Salsa golf', image: sauceGolf },
+]
 
 const BURGER_INCLUDES = ['Medallones', 'Pan artesanal', 'Aderezos']
 const tiers = (prices) => [12, 24, 36, 48, 60].map((qty, i) => ({ qty, price: prices[i] }))
@@ -892,8 +914,9 @@ export const promotions = [
 ]
 
 for (const c of combos) {
-  if (c.category === 'hamburguesas') c.addons = [CHEDDAR]
-  if (c.category === 'panchos') c.addons = [PAPAS_PAY, CHEDDAR]
+  if (c.category === 'hamburguesas') c.addons = [CHEDDAR, CHEDDAR_KG]
+  if (c.category === 'panchos') c.addons = [PAPAS_PAY, CHEDDAR, CHEDDAR_KG]
+  if (['hamburguesas', 'panchos', 'choris'].includes(c.category)) c.sauces = SAUCES
   if (c.category === 'hamburguesas') c.bread = PAN_HAMBURGUESA
   if (c.id.startsWith('super-panchos')) c.bread = PAN_SUPER_PANCHOS
 }

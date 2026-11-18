@@ -28,7 +28,7 @@ function Chips({ legend, name, options, value, onChange }) {
 export function AddonPicker({ addons, selected, onToggle }) {
   return (
     <fieldset>
-      <legend className="mb-2 text-[0.68rem] font-extrabold tracking-[0.16em] text-navy/45 uppercase">Sumale por $1.000 más</legend>
+      <legend className="mb-2 text-[0.68rem] font-extrabold tracking-[0.16em] text-navy/45 uppercase">Sumale</legend>
       <div className="flex flex-wrap gap-2">
         {addons.map((a) => {
           const on = selected.includes(a.id)
@@ -41,15 +41,35 @@ export function AddonPicker({ addons, selected, onToggle }) {
                 }`}
               >
                 <img src={a.image} alt="" aria-hidden="true" className="size-7 rounded-full bg-crema object-cover" />
-                <span className="capitalize">{a.label}</span>
+                <span className="inline-block first-letter:uppercase">{a.label}</span>
+                <span className={`text-xs ${on ? 'text-white/80' : 'text-navy/50'}`}>+{formatPrice(a.price)}</span>
                 <span className={`grid size-5 place-items-center rounded-full ${on ? 'bg-white text-rojo' : 'bg-crema text-navy/60'}`}>
                   {on ? <CheckIcon className="size-3" /> : <PlusIcon className="size-3" />}
                 </span>
-                <span className="sr-only"> (+{formatPrice(a.price)})</span>
               </span>
             </label>
           )
         })}
+      </div>
+    </fieldset>
+  )
+}
+
+/** Aderezo a elección (incluido, sin costo). */
+export function SaucePicker({ sauces, value, onChange, name }) {
+  return (
+    <fieldset>
+      <legend className="mb-2 text-[0.68rem] font-extrabold tracking-[0.16em] text-navy/45 uppercase">Elegí el aderezo · incluido</legend>
+      <div className="grid grid-cols-4 gap-1.5">
+        {sauces.map((sc, i) => (
+          <label key={sc.id} className="cursor-pointer">
+            <input type="radio" name={name} checked={i === value} onChange={() => onChange(i)} className="peer sr-only" />
+            <span className="flex flex-col items-center gap-1 rounded-lg border-2 border-navy/10 bg-white px-1 py-1.5 text-center text-[0.7rem] leading-tight font-bold text-navy/70 transition-colors peer-checked:border-navy peer-checked:text-navy peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rojo hover:border-navy/40">
+              <img src={sc.image} alt="" aria-hidden="true" className="h-9 w-auto object-contain" />
+              {sc.label}
+            </span>
+          </label>
+        ))}
       </div>
     </fieldset>
   )
@@ -97,6 +117,8 @@ export default function ProductOptions({ combo, cfg, uid, size = 'md' }) {
           Combo x{cfg.tier.qty} {combo.unitLabel}
         </p>
       )}
+
+      {combo.sauces && <SaucePicker sauces={combo.sauces} value={cfg.sauceIdx} onChange={cfg.setSauceIdx} name={`${uid}-s`} />}
 
       {cfg.priced && combo.addons?.length > 0 && <AddonPicker addons={combo.addons} selected={cfg.addonIds} onToggle={cfg.toggleAddon} />}
 
