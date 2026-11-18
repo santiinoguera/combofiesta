@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCart, toCartItem } from '../cart/CartContext'
-import { getCombo, upsellIds } from '../data/combos'
+import { getCombo, upsellIds, cartReminderId } from '../data/combos'
 import { cartLink } from '../lib/whatsapp'
 import { formatPrice } from '../lib/format'
 import { CartIcon, CloseIcon, MinusIcon, PlusIcon, TrashIcon, WhatsAppIcon } from './Icons'
@@ -94,6 +94,38 @@ function CartLine({ it }) {
         </div>
       </div>
     </li>
+  )
+}
+
+/* Recordatorio animado: "¡No te olvidés! Por $5.500 llevate el carbón" */
+function Reminder() {
+  const cart = useCart()
+  const [hidden, setHidden] = useState(false)
+  const c = getCombo(cartReminderId)
+  if (!c || hidden || !c.tiers?.length || cart.items.some((it) => it.id === c.id)) return null
+  const tier = c.tiers[0]
+  return (
+    <div role="status" className="relative mx-5 mt-4 animate-reminder-in overflow-hidden rounded-xl bg-navy p-3 pr-10 text-white shadow-lift">
+      <div className="flex items-center gap-3">
+        <img src={c.image} alt="" className="h-16 w-auto shrink-0 animate-wiggle object-contain drop-shadow-[0_6px_10px_rgb(0_0_0/0.4)]" />
+        <div className="min-w-0 flex-1">
+          <p className="display text-xl leading-none text-celeste">¡No te olvidés!</p>
+          <p className="mt-1 text-sm leading-tight font-bold">
+            Por <span className="text-[#FFC233]">{formatPrice(tier.price)}</span> llevate el carbón
+          </p>
+          <button
+            type="button"
+            onClick={() => cart.add(toCartItem(c, { tier }))}
+            className="btn-shine mt-2 inline-flex items-center gap-1 rounded-md bg-rojo px-3 py-1.5 text-xs font-extrabold transition-colors hover:bg-white hover:text-rojo"
+          >
+            <PlusIcon className="size-3.5" /> Sumar carbón
+          </button>
+        </div>
+      </div>
+      <button type="button" onClick={() => setHidden(true)} aria-label="Cerrar recordatorio" className="absolute top-2 right-2 grid size-7 place-items-center rounded-full bg-white/10 hover:bg-white/25">
+        <CloseIcon className="size-3.5" />
+      </button>
+    </div>
   )
 }
 
@@ -194,6 +226,7 @@ export default function CartDrawer() {
         ) : (
           <>
             <div className="flex-1 overflow-y-auto">
+              <Reminder />
               <ul className="divide-y divide-navy/10 px-5">
                 {cart.items.map((it) => (
                   <CartLine key={it.key} it={it} />

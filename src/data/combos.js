@@ -90,6 +90,7 @@ import sauceMayo from '../assets/img/promo/sauce-mayo.webp'
 import sauceKetchup from '../assets/img/promo/sauce-ketchup.webp'
 import sauceMostaza from '../assets/img/promo/sauce-mostaza.webp'
 import sauceGolf from '../assets/img/promo/sauce-golf.webp'
+import carbonLosLenos from '../assets/img/products/carbon-los-lenos.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -121,7 +122,7 @@ export const categories = [
     id: 'choris',
     label: 'Choris',
     title: 'Combos de choris',
-    tagline: 'Choripanes Paladini con panes y aderezos, por encargo.',
+    tagline: 'Choripanes Paladini con panes y aderezos, por encargo. Y el carbón para el asado.',
     highlight: 'combo-especial-choris', // producto destacado (tarjeta grande)
     cover: choripan,
   },
@@ -352,6 +353,17 @@ export const combos = [
     ],
     note: 'Encargalo de un día para otro',
     image: choripan,
+  },
+  {
+    id: 'carbon-los-lenos',
+    category: 'choris',
+    name: 'Carbón Vegetal Los Leños 4 kg',
+    brand: 'Los Leños',
+    weight: '4 kg',
+    description: 'Carbón vegetal premium que no hace chispa. Ideal para el asado.',
+    tiers: [{ qty: null, price: 5500 }],
+    image: carbonLosLenos,
+    pack: true,
   },
 
   // ─────────────── SNACKS ───────────────
@@ -925,6 +937,9 @@ for (const c of combos) {
  * "COMPLETÁ TU FIESTA": sugerencias que se muestran en el carrito antes de finalizar.
  * Solo se muestran las que tienen precio y no están ya en el carrito. Editá los ids para cambiarlas.
  */
+/** Recordatorio animado que aparece al abrir el carrito (si el producto no está en el pedido). */
+export const cartReminderId = 'carbon-los-lenos'
+
 export const upsellIds = ['snacks-2', 'snacks-1', 'paladini-papas-baston', 'simplot-papas-11', 'swift-crunchies-pollo', 'mccain-smiles']
 
 export const getCombo = (id) => combos.find((c) => c.id === id)
