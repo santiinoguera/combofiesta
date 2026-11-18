@@ -73,6 +73,10 @@ import paladiniMedallonesPollo from '../assets/img/products/paladini-medallones-
 import paladiniPapasBaston from '../assets/img/products/paladini-papas-baston.webp'
 import swiftCrunchies from '../assets/img/products/swift-crunchies.webp'
 import swiftPalitosPollo from '../assets/img/products/swift-palitos-pollo.webp'
+import landyMani from '../assets/img/landy-mani.webp'
+import oasisConitos from '../assets/img/products/oasis-conitos.webp'
+import oasisChalitas from '../assets/img/products/oasis-chalitas.webp'
+import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -112,7 +116,7 @@ export const categories = [
     id: 'salados',
     label: 'Snacks',
     title: 'Combos de snacks',
-    tagline: 'Combos de snacks para picar en la previa. Se venden solo en combo.',
+    tagline: 'Combos de snacks y snacks sueltos para picar en la previa.',
     cover: catSalados,
   },
   {
@@ -377,6 +381,52 @@ export const combos = [
     includes: ['1 kg Papas Craker', '500 g Chizitos Craker', '500 g Palitos Craker'],
     tiers: [{ qty: null, price: 21900 }],
     image: snacks6,
+  },
+
+  // ─────────────── SNACKS SUELTOS ───────────────
+  {
+    id: 'landy-mani',
+    category: 'salados',
+    name: 'Maní Crocante Landy 1 kg',
+    brand: 'Landy',
+    weight: '1 kg',
+    description: 'Maní crocante en ocho sabores. Elegí el tuyo.',
+    variants: ['Clásico', 'Chimichurri', 'Jamón', 'Queso', 'Pizza', 'Cebolla', 'Provenzal', 'Salame'],
+    tiers: null,
+    image: landyMani,
+  },
+  {
+    id: 'oasis-papas-tradicional',
+    category: 'salados',
+    name: 'Papas Fritas Oasis Corte Tradicional 700 g',
+    brand: 'Oasis',
+    weight: '700 g',
+    description: 'Bolsa grande de papas fritas corte tradicional.',
+    tiers: null,
+    image: oasisPapasTradicional,
+    pack: true,
+  },
+  {
+    id: 'oasis-conitos-pizza',
+    category: 'salados',
+    name: 'Conitos 3D Oasis sabor Pizza 400 g',
+    brand: 'Oasis',
+    weight: '400 g',
+    description: 'Conitos de maíz sabor pizza, bolsa grande.',
+    tiers: null,
+    image: oasisConitos,
+    photo: true,
+  },
+  {
+    id: 'oasis-chalitas-queso',
+    category: 'salados',
+    name: 'Chalitas Oasis sabor Queso 400 g',
+    brand: 'Oasis',
+    weight: '400 g',
+    description: 'Chalitas de maíz sabor queso.',
+    tiers: null,
+    image: oasisChalitas,
+    photo: true,
   },
 
   // ─────────────── SALADOS (productos sueltos, precio a consultar) ───────────────
