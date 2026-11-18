@@ -45,7 +45,6 @@ import snacks3 from '../assets/img/snacks-3.webp'
 import snacks4 from '../assets/img/snacks-4.webp'
 import snacks5 from '../assets/img/snacks-5.webp'
 import snacks6 from '../assets/img/snacks-6.webp'
-import landyMani from '../assets/img/landy-mani.webp'
 import catCongelados from '../assets/img/cat-congelados.webp'
 import catSalados from '../assets/img/cat-salados.webp'
 import cheddarImg from '../assets/img/promo/cheddar-danica.webp'
@@ -69,8 +68,6 @@ import bembrasilCarinhas from '../assets/img/products/bembrasil-carinhas.webp'
 import mccainSmiles from '../assets/img/products/mccain-smiles.webp'
 import mccainClasicas from '../assets/img/products/mccain-clasicas.webp'
 import mccainNoisette from '../assets/img/products/mccain-noisette.webp'
-import oasisConitos from '../assets/img/products/oasis-conitos.webp'
-import oasisChalitas from '../assets/img/products/oasis-chalitas.webp'
 import vegetalexBurger from '../assets/img/products/vegetalex-burger.webp'
 import paladiniMedallonesPollo from '../assets/img/products/paladini-medallones-pollo.webp'
 import paladiniPapasBaston from '../assets/img/products/paladini-papas-baston.webp'
@@ -79,7 +76,6 @@ import swiftPalitosPollo from '../assets/img/products/swift-palitos-pollo.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
-import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 
 /**
  * CATEGORÍAS — el orden de este array es el orden del catálogo en la web.
@@ -114,9 +110,9 @@ export const categories = [
   },
   {
     id: 'salados',
-    label: 'Salados',
-    title: 'Salados',
-    tagline: 'Combos de snacks y maní para picar en la previa.',
+    label: 'Snacks',
+    title: 'Combos de snacks',
+    tagline: 'Combos de snacks para picar en la previa. Se venden solo en combo.',
     cover: catSalados,
   },
   {
@@ -384,28 +380,6 @@ export const combos = [
   },
 
   // ─────────────── SALADOS (productos sueltos, precio a consultar) ───────────────
-  {
-    id: 'landy-mani',
-    category: 'salados',
-    name: 'Maní Crocante Landy 1 kg',
-    brand: 'Landy',
-    weight: '1 kg',
-    description: 'Maní crocante en ocho sabores. Elegí el tuyo.',
-    variants: ['Clásico', 'Chimichurri', 'Jamón', 'Queso', 'Pizza', 'Cebolla', 'Provenzal', 'Salame'],
-    tiers: null,
-    image: landyMani,
-  },
-  {
-    id: 'oasis-papas-tradicional',
-    category: 'salados',
-    name: 'Papas Fritas Oasis Corte Tradicional 700 g',
-    brand: 'Oasis',
-    weight: '700 g',
-    description: 'Bolsa grande de papas fritas corte tradicional.',
-    tiers: null,
-    image: oasisPapasTradicional,
-    pack: true,
-  },
 
   // ─────────────── CONGELADOS (precio a consultar) ───────────────
   {
@@ -592,28 +566,6 @@ export const combos = [
   },
 
   // ─────────────── NUEVOS (fotos del local) ───────────────
-  {
-    id: 'oasis-conitos-pizza',
-    category: 'salados',
-    name: 'Conitos 3D Oasis sabor Pizza 400 g',
-    brand: 'Oasis',
-    weight: '400 g',
-    description: 'Conitos de maíz sabor pizza, bolsa grande.',
-    tiers: null,
-    image: oasisConitos,
-    photo: true,
-  },
-  {
-    id: 'oasis-chalitas-queso',
-    category: 'salados',
-    name: 'Chalitas Oasis sabor Queso 400 g',
-    brand: 'Oasis',
-    weight: '400 g',
-    description: 'Chalitas de maíz sabor queso.',
-    tiers: null,
-    image: oasisChalitas,
-    photo: true,
-  },
   {
     id: 'paladini-papas-baston',
     category: 'congelados',
