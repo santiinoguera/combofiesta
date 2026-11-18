@@ -419,7 +419,7 @@ export const combos = [
     description: 'Conitos de maíz sabor pizza, bolsa grande.',
     tiers: null,
     image: oasisConitos,
-    photo: true,
+    pack: true,
   },
   {
     id: 'oasis-chalitas-queso',
@@ -430,7 +430,7 @@ export const combos = [
     description: 'Chalitas de maíz sabor queso.',
     tiers: null,
     image: oasisChalitas,
-    photo: true,
+    pack: true,
   },
 
   // ─────────────── SALADOS (productos sueltos, precio a consultar) ───────────────
@@ -759,6 +759,12 @@ for (const c of combos) {
   if (c.category === 'hamburguesas') c.bread = PAN_HAMBURGUESA
   if (c.id.startsWith('super-panchos')) c.bread = PAN_SUPER_PANCHOS
 }
+
+/**
+ * "COMPLETÁ TU FIESTA": sugerencias que se muestran en el carrito antes de finalizar.
+ * Solo se muestran las que tienen precio y no están ya en el carrito. Editá los ids para cambiarlas.
+ */
+export const upsellIds = ['snacks-2', 'snacks-1', 'paladini-papas-baston', 'simplot-papas-11', 'swift-crunchies-pollo', 'mccain-smiles']
 
 export const getCombo = (id) => combos.find((c) => c.id === id)
 // Dentro de cada categoría, los productos 'Dulce' van al final (orden estable).

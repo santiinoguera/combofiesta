@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCart, toCartItem } from '../cart/CartContext'
-import { getCombo } from '../data/combos'
+import { getCombo, upsellIds } from '../data/combos'
 import { cartLink } from '../lib/whatsapp'
 import { formatPrice } from '../lib/format'
 import { CartIcon, CloseIcon, MinusIcon, PlusIcon, TrashIcon, WhatsAppIcon } from './Icons'
@@ -96,6 +96,49 @@ function CartLine({ it }) {
   )
 }
 
+/* "Completá tu fiesta con…": sugerencias con precio que todavía no están en el carrito */
+function Upsell() {
+  const cart = useCart()
+  const inCart = new Set(cart.items.map((it) => it.id))
+  const list = upsellIds
+    .map(getCombo)
+    .filter((c) => c && Array.isArray(c.tiers) && c.tiers.length && !inCart.has(c.id))
+    .slice(0, 3)
+  if (!list.length) return null
+  return (
+    <section aria-labelledby="upsell-title" className="mx-5 mt-2 mb-5 rounded-xl bg-celeste-soft p-4">
+      <h3 id="upsell-title" className="display text-2xl text-navy">
+        Completá tu fiesta <span className="text-rojo">con…</span>
+      </h3>
+      <ul className="mt-3 space-y-2">
+        {list.map((c) => {
+          const tier = c.tiers[0]
+          return (
+            <li key={c.id} className="flex items-center gap-3 rounded-lg bg-white p-2 ring-1 ring-navy/8">
+              <img src={c.image} alt="" className={`size-14 shrink-0 rounded-md bg-crema ${c.pack ? 'object-contain p-1' : 'object-cover'}`} />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-bold text-navy">{c.name}</p>
+                <p className="text-sm font-extrabold text-rojo">
+                  {formatPrice(tier.price)}
+                  {tier.qty && <span className="text-xs font-bold text-navy/50"> · x{tier.qty}</span>}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => cart.add(toCartItem(c, { tier }))}
+                aria-label={`Sumar ${c.name} al pedido`}
+                className="flex shrink-0 items-center gap-1 rounded-md bg-navy px-3 py-2 text-xs font-extrabold text-white transition-colors hover:bg-rojo"
+              >
+                <PlusIcon className="size-3.5" /> Sumar
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
+
 /** Panel lateral del carrito. "Finalizar pedido" abre WhatsApp con el pedido completo. */
 export default function CartDrawer() {
   const cart = useCart()
@@ -149,11 +192,14 @@ export default function CartDrawer() {
           </div>
         ) : (
           <>
-            <ul className="flex-1 divide-y divide-navy/10 overflow-y-auto px-5">
-              {cart.items.map((it) => (
-                <CartLine key={it.key} it={it} />
-              ))}
-            </ul>
+            <div className="flex-1 overflow-y-auto">
+              <ul className="divide-y divide-navy/10 px-5">
+                {cart.items.map((it) => (
+                  <CartLine key={it.key} it={it} />
+                ))}
+              </ul>
+              <Upsell />
+            </div>
 
             <footer className="space-y-3 border-t-4 border-celeste bg-crema px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
               <dl className="space-y-1 text-sm">

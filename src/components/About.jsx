@@ -1,4 +1,4 @@
-import frente from '../assets/img/local-frente.webp'
+import interior from '../assets/img/local-interior.webp'
 import Reveal from './Reveal'
 
 /** ¿Quiénes somos? — texto provisto por Combo Fiesta. */
@@ -9,8 +9,8 @@ export default function About() {
         <Reveal className="relative lg:col-span-5">
           <div aria-hidden="true" className="absolute -inset-3 -rotate-2 rounded-2xl bg-celeste" />
           <img
-            src={frente}
-            alt="Frente del local de Combo Fiesta en la zona sur de Rosario"
+            src={interior}
+            alt="Interior del local de Combo Fiesta: mostrador, góndolas de snacks, panes y carteles de combos"
             loading="lazy"
             decoding="async"
             className="relative aspect-[4/5] w-full rounded-xl object-cover shadow-soft"
