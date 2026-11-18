@@ -22,6 +22,7 @@
  *  - addons:    agregados opcionales con precio (cheddar / papas pay, +$1.000 c/u). Se asignan por categoría al final del archivo.
  *  - group:     'Salado' o 'Dulce' (Congelados): ordena la sección, salados primero y dulces al final.
  *  - photo:     true si la imagen es una foto real (se muestra completa sobre su propio fondo desenfocado).
+ *  - bread:     foto real del pan que se entrega (se asigna al final del archivo).
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
  *
  * Precios cargados según las publicaciones vigentes de Combo Fiesta.
@@ -75,6 +76,8 @@ import landyMani from '../assets/img/landy-mani.webp'
 import oasisConitos from '../assets/img/products/oasis-conitos.webp'
 import oasisChalitas from '../assets/img/products/oasis-chalitas.webp'
 import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
+import panRealHamburguesa from '../assets/img/pan-real-hamburguesa.webp'
+import panRealPanchos from '../assets/img/pan-real-panchos.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -145,6 +148,10 @@ export const PAPAS_PAY = {
   promo: promoPapasPay, // placa promocional que se muestra sobre la foto del combo
   tag: 'Por $1.000 más te llevás unas papas pay',
 }
+
+/** Foto real del pan que se entrega (se muestra en la vista ampliada del combo). */
+const PAN_HAMBURGUESA = { image: panRealHamburguesa, caption: 'Pan para hamburguesas x12 en bolsa Combo Fiesta' }
+const PAN_SUPER_PANCHOS = { image: panRealPanchos, caption: 'Pan para super panchos' }
 
 const BURGER_INCLUDES = ['Medallones', 'Pan artesanal', 'Aderezos']
 const tiers = (prices) => [12, 24, 36, 48, 60].map((qty, i) => ({ qty, price: prices[i] }))
@@ -749,6 +756,8 @@ export const promotions = [
 for (const c of combos) {
   if (c.category === 'hamburguesas') c.addons = [CHEDDAR]
   if (c.category === 'panchos') c.addons = [PAPAS_PAY, CHEDDAR]
+  if (c.category === 'hamburguesas') c.bread = PAN_HAMBURGUESA
+  if (c.id.startsWith('super-panchos')) c.bread = PAN_SUPER_PANCHOS
 }
 
 export const getCombo = (id) => combos.find((c) => c.id === id)

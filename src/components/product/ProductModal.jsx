@@ -11,6 +11,7 @@ export default function ProductModal({ combo, onClose }) {
   const uid = useId()
   const cfg = useProductConfig(combo)
   const [count, setCount] = useState(1)
+  const [view, setView] = useState('combo')
 
   useEffect(() => {
     ref.current?.showModal()
@@ -29,8 +30,42 @@ export default function ProductModal({ combo, onClose }) {
       className="m-auto max-h-[92dvh] w-[min(64rem,calc(100%-1.5rem))] overflow-hidden rounded-xl bg-white p-0 text-navy shadow-lift backdrop:bg-navy/60 backdrop:backdrop-blur-sm open:animate-dialog-in"
     >
       <div className="grid max-h-[92dvh] overflow-y-auto md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <div className="group relative min-w-0 overflow-hidden">
-          <ProductImage combo={combo} large className="md:h-full md:min-h-[30rem]" />
+        <div className="group relative flex min-w-0 flex-col overflow-hidden bg-crema">
+          {view === 'bread' && combo.bread ? (
+            <figure className="relative aspect-[4/3] md:aspect-auto md:min-h-[26rem] md:flex-1">
+              <img src={combo.bread.image} alt={combo.bread.caption} className="absolute inset-0 size-full animate-price-pop object-cover" />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/85 to-transparent px-4 pt-10 pb-3 text-sm font-bold text-white">
+                Así es el pan que te llevás · {combo.bread.caption}
+              </figcaption>
+            </figure>
+          ) : (
+            <ProductImage combo={combo} large className="md:aspect-auto md:min-h-[26rem] md:flex-1" />
+          )}
+
+          {combo.bread && (
+            <div className="flex gap-2 border-t border-navy/10 bg-white p-3" role="group" aria-label="Fotos del producto">
+              {[
+                { id: 'combo', label: 'El combo', src: combo.image, cover: !combo.pack },
+                { id: 'bread', label: 'Así es el pan', src: combo.bread.image, cover: true },
+              ].map((t) => {
+                const on = view === t.id
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setView(t.id)}
+                    aria-pressed={on}
+                    className={`flex flex-1 items-center gap-2 rounded-lg border-2 p-1.5 pr-3 text-left text-sm font-extrabold transition-colors ${
+                      on ? 'border-navy bg-navy text-white' : 'border-navy/10 text-navy hover:border-navy/40'
+                    }`}
+                  >
+                    <img src={t.src} alt="" className={`size-11 shrink-0 rounded-md bg-crema ${t.cover ? 'object-cover' : 'object-contain'}`} />
+                    {t.label}
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </div>
         <div className="flex min-w-0 flex-col p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
