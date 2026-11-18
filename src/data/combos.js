@@ -20,7 +20,7 @@
  *               Choris todavía usa el recorte del flyer: REEMPLAZAR cuando haya foto.
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
  *  - addons:    agregados opcionales con precio (cheddar / papas pay, +$1.000 c/u). Se asignan por categoría al final del archivo.
- *  - group:     subgrupo dentro de la categoría (ej. 'Salado' / 'Dulce' en Congelados).
+ *  - group:     'Salado' o 'Dulce' (Congelados): ordena la sección, salados primero y dulces al final.
  *  - photo:     true si la imagen es una foto real (se muestra completa sobre su propio fondo desenfocado).
  *  - note:      aviso corto opcional (ej. "Encargalo de un día para otro").
  *
@@ -123,8 +123,7 @@ export const categories = [
     id: 'congelados',
     label: 'Congelados',
     title: 'Congelados',
-    tagline: 'Papas, pollo, vegetales y frutas congeladas. Salado y dulce, listos para el freezer.',
-    groups: ['Salado', 'Dulce'],
+    tagline: 'Papas, pollo, vegetales y frutas congeladas, listos para el freezer.',
     cover: catCongelados,
   },
 ]
@@ -779,4 +778,8 @@ for (const c of combos) {
 }
 
 export const getCombo = (id) => combos.find((c) => c.id === id)
-export const byCategory = (id) => combos.filter((c) => c.category === id)
+// Dentro de cada categoría, los productos 'Dulce' van al final (orden estable).
+export const byCategory = (id) => {
+  const list = combos.filter((c) => c.category === id)
+  return [...list.filter((c) => c.group !== 'Dulce'), ...list.filter((c) => c.group === 'Dulce')]
+}
