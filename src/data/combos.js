@@ -17,7 +17,7 @@
  *  - variants:  sabores/variedades para elegir (opcional, ej. maní Landy).
  *  - unitLabel: cómo se llaman las unidades ('hamburguesas', 'panchos', 'choris').
  *  - image:     foto (1200x900 .webp con fondo, o paquete recortado con `pack: true`).
- *               Choris todavía usa el recorte del flyer: REEMPLAZAR cuando haya foto.
+ *               Todas las fotos son reales o composiciones con fotos de producto.
  *  - pack:      true si la foto es solo el paquete (se muestra centrada, sin recortar).
  *  - addons:    agregados opcionales con precio (cheddar / papas pay, +$1.000 c/u). Se asignan por categoría al final del archivo.
  *  - group:     'Salado' o 'Dulce' (Congelados): ordena la sección, salados primero y dulces al final.
