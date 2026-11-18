@@ -7,7 +7,7 @@ function Banner({ promo, title, text, cta, href, align }) {
   return (
     <a
       href={href}
-      className={`group relative flex h-full flex-col overflow-hidden bg-[#1a0606] text-white sm:flex-row ${align === 'right' ? 'sm:flex-row-reverse' : ''}`}
+      className={`group relative flex h-full flex-col overflow-hidden rounded-xl bg-white text-navy shadow-soft ring-1 ring-navy/5 sm:flex-row ${align === 'right' ? 'sm:flex-row-reverse' : ''}`}
     >
       <img
         src={promo.promo}
@@ -17,9 +17,9 @@ function Banner({ promo, title, text, cta, href, align }) {
         className="aspect-[3/2] w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:w-3/5"
       />
       <div className="flex flex-1 flex-col justify-center gap-3 p-6 sm:p-8">
-        <p className="text-xs font-extrabold tracking-[0.2em] text-celeste uppercase">{title}</p>
-        <p className="text-white/80">{text}</p>
-        <span className="mt-2 inline-flex items-center gap-2 font-extrabold text-white">
+        <p className="text-xs font-extrabold tracking-[0.2em] text-rojo uppercase">{title}</p>
+        <p className="text-navy/70">{text}</p>
+        <span className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-rojo px-4 py-2 font-extrabold text-white transition-colors group-hover:bg-navy">
           {cta}
           <ArrowIcon className="size-5 transition-transform group-hover:translate-x-1" />
         </span>

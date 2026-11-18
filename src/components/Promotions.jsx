@@ -115,25 +115,25 @@ export default function Promotions() {
   const items = promotions.map(resolve).filter(Boolean)
   const featured = items.find((p) => p.featured) ?? items[0]
   const rest = items.filter((p) => p !== featured)
-  const tones = ['celeste', 'white', 'crema']
+  const tones = ['white', 'crema', 'white']
 
   return (
-    <section id="promociones" aria-labelledby="promos-title" className="relative overflow-hidden bg-navy py-24 text-white sm:py-32">
-      <div aria-hidden="true" className="dots absolute inset-0 text-white/[0.04]" />
-      <div aria-hidden="true" className="absolute -top-40 -right-40 size-[32rem] rounded-full bg-celeste/20 blur-3xl" />
+    <section id="promociones" aria-labelledby="promos-title" className="relative overflow-hidden bg-celeste py-24 text-navy sm:py-32">
+      <div aria-hidden="true" className="dots absolute inset-0 text-white/30" />
+      <div aria-hidden="true" className="absolute -top-40 -right-40 size-[32rem] rounded-full bg-white/30 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <Reveal>
-            <p className="eyebrow text-celeste">
-              <span className="h-0.5 w-8 bg-celeste" /> Destacados
+            <p className="eyebrow text-rojo">
+              <span className="h-0.5 w-8 bg-rojo" /> Destacados
             </p>
-            <h2 id="promos-title" className="display mt-4 text-[clamp(3rem,8vw,6rem)]">
-              Promo<span className="text-rojo">ciones</span>
+            <h2 id="promos-title" className="display mt-4 text-[clamp(3rem,8vw,6rem)] text-navy">
+              Promo<span className="text-white [text-shadow:3px_3px_0_var(--color-rojo)]">ciones</span>
             </h2>
           </Reveal>
           <Reveal delay={100}>
-            <p className="max-w-sm text-lg leading-relaxed text-white/70">
+            <p className="max-w-sm text-lg leading-relaxed text-navy/80">
               Los combos que más rinden para cada tipo de juntada. Precios vigentes, consultá disponibilidad por WhatsApp.
             </p>
           </Reveal>
