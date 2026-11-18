@@ -78,6 +78,13 @@ import oasisChalitas from '../assets/img/products/oasis-chalitas.webp'
 import oasisPapasTradicional from '../assets/img/products/oasis-papas-tradicional.webp'
 import panRealHamburguesa from '../assets/img/pan-real-hamburguesa.webp'
 import panRealPanchos from '../assets/img/pan-real-panchos.webp'
+import snkCrakerPapas from '../assets/img/products/craker-papas-real.webp'
+import snkCrakerChizitos from '../assets/img/products/craker-chizitos-real.webp'
+import snkPehuamarPalitos from '../assets/img/products/pehuamar-palitos.webp'
+import snkPehuamarMaicitos from '../assets/img/products/pehuamar-maicitos.webp'
+import snkPehuamarPapas from '../assets/img/products/pehuamar-papas.webp'
+import snkLandyChizitos from '../assets/img/products/landy.webp'
+import fotoProximamente from '../assets/img/products/foto-proximamente.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -431,6 +438,152 @@ export const combos = [
     tiers: [{ qty: null, price: 5900 }],
     image: oasisChalitas,
     pack: true,
+  },
+  {
+    id: 'pehuamar-palitos',
+    category: 'salados',
+    name: "Palitos Salados Pehuamar",
+    brand: "Pehuamar",
+    description: "Palitos de maíz salados Pehuamar.",
+    tiers: [{ qty: null, price: 7200 }],
+    image: snkPehuamarPalitos,
+    pack: true,
+  },
+  {
+    id: 'pehuamar-maicitos-265',
+    category: 'salados',
+    name: "Maicitos Pehuamar 265 g",
+    brand: "Pehuamar",
+    weight: '265 g',
+    description: "Maicitos inflados, bolsa grande.",
+    tiers: [{ qty: null, price: 6500 }],
+    image: snkPehuamarMaicitos,
+    pack: true,
+  },
+  {
+    id: 'pehuamar-maicitos-125',
+    category: 'salados',
+    name: "Maicitos Pehuamar 125 g",
+    brand: "Pehuamar",
+    weight: '125 g',
+    description: "Maicitos inflados, bolsa chica.",
+    tiers: [{ qty: null, price: 3900 }],
+    image: snkPehuamarMaicitos,
+    pack: true,
+  },
+  {
+    id: 'pehuamar-papas-420',
+    category: 'salados',
+    name: "Papas Fritas Pehuamar 420 g",
+    brand: "Pehuamar",
+    weight: '420 g',
+    description: "Papas fritas acanaladas Pehuamar.",
+    tiers: [{ qty: null, price: 9900 }],
+    image: snkPehuamarPapas,
+    pack: true,
+  },
+  {
+    id: 'craker-papas-1kg',
+    category: 'salados',
+    name: "Papas Fritas Craker 1 kg",
+    brand: "Craker",
+    weight: '1 kg',
+    description: "Bolsa de un kilo de papas fritas Craker.",
+    tiers: [{ qty: null, price: 17900 }],
+    image: snkCrakerPapas,
+    pack: true,
+  },
+  {
+    id: 'craker-papas-500',
+    category: 'salados',
+    name: "Papas Fritas Craker 500 g",
+    brand: "Craker",
+    weight: '500 g',
+    description: "Papas fritas Craker, bolsa de medio kilo.",
+    tiers: [{ qty: null, price: 8900 }],
+    image: snkCrakerPapas,
+    pack: true,
+  },
+  {
+    id: 'craker-chizitos',
+    category: 'salados',
+    name: "Chizitos Craker",
+    brand: "Craker",
+    description: "Chizitos de maíz con queso.",
+    tiers: [{ qty: null, price: 3200 }],
+    image: snkCrakerChizitos,
+    pack: true,
+  },
+  {
+    id: 'craker-papas-pay-90',
+    category: 'salados',
+    name: "Papas Pay Craker 90 g",
+    brand: "Craker",
+    weight: '90 g',
+    description: "Papas pay tradicionales.",
+    tiers: [{ qty: null, price: 2000 }],
+    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+  },
+  {
+    id: 'craker-papas-pay-300',
+    category: 'salados',
+    name: "Papas Pay Craker 300 g",
+    brand: "Craker",
+    weight: '300 g',
+    description: "Papas pay tradicionales.",
+    tiers: [{ qty: null, price: 4500 }],
+    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+  },
+  {
+    id: 'craker-papas-pay-500',
+    category: 'salados',
+    name: "Papas Pay Craker 500 g",
+    brand: "Craker",
+    weight: '500 g',
+    description: "Papas pay tradicionales.",
+    tiers: [{ qty: null, price: 8900 }],
+    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+  },
+  {
+    id: 'craker-papas-pay-1kg',
+    category: 'salados',
+    name: "Papas Pay Craker 1 kg",
+    brand: "Craker",
+    weight: '1 kg',
+    description: "Papas pay tradicionales, bolsa de un kilo.",
+    tiers: [{ qty: null, price: 17900 }],
+    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+  },
+  {
+    id: 'landy-chizitos-1kg',
+    category: 'salados',
+    name: "Chizitos Landy 1 kg",
+    brand: "Landy",
+    weight: '1 kg',
+    description: "Chizitos de maíz Landy, bolsa de un kilo.",
+    tiers: [{ qty: null, price: 4900 }],
+    image: snkLandyChizitos,
+    pack: true,
+  },
+  {
+    id: 'landy-palitos-1kg',
+    category: 'salados',
+    name: "Palitos Landy 1 kg",
+    brand: "Landy",
+    weight: '1 kg',
+    description: "Palitos salados Landy, bolsa de un kilo.",
+    tiers: [{ qty: null, price: 7500 }],
+    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+  },
+  {
+    id: 'lays-papas-335',
+    category: 'salados',
+    name: "Papas Fritas Lay's 335 g",
+    brand: "Lay's",
+    weight: '335 g',
+    description: "Papas fritas clásicas Lay's.",
+    tiers: [{ qty: null, price: 9900 }],
+    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
   },
 
   // ─────────────── SALADOS (productos sueltos, precio a consultar) ───────────────
