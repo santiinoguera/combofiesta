@@ -150,7 +150,7 @@ export const PAPAS_PAY = {
 }
 
 /** Foto real del pan que se entrega (se muestra en la vista ampliada del combo). */
-const PAN_HAMBURGUESA = { image: panRealHamburguesa, caption: 'Pan para hamburguesas x12 en bolsa Combo Fiesta' }
+const PAN_HAMBURGUESA = { image: panRealHamburguesa, caption: 'Pan para hamburguesas' }
 const PAN_SUPER_PANCHOS = { image: panRealPanchos, caption: 'Pan para super panchos' }
 
 const BURGER_INCLUDES = ['Medallones', 'Pan artesanal', 'Aderezos']
