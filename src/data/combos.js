@@ -83,7 +83,8 @@ import snkPehuamarPalitos from '../assets/img/products/pehuamar-palitos.webp'
 import snkPehuamarMaicitos from '../assets/img/products/pehuamar-maicitos.webp'
 import snkPehuamarPapas from '../assets/img/products/pehuamar-papas.webp'
 import snkLandyChizitos from '../assets/img/products/landy.webp'
-import fotoProximamente from '../assets/img/products/foto-proximamente.webp'
+import snkCracketPay from '../assets/img/products/cracket-papas-pay.webp'
+import snkLandyPalitos from '../assets/img/products/landy-palitos-1kg.webp'
 import glArvejas from '../assets/img/products/gl-arvejas.webp'
 import glBrocoli from '../assets/img/products/gl-brocoli.webp'
 import simplotPapas11 from '../assets/img/products/simplot-papas-11.webp'
@@ -511,7 +512,8 @@ export const combos = [
     weight: '90 g',
     description: "Papas pay tradicionales.",
     tiers: [{ qty: null, price: 2000 }],
-    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+    image: snkCracketPay,
+    pack: true,
   },
   {
     id: 'craker-papas-pay-300',
@@ -521,7 +523,8 @@ export const combos = [
     weight: '300 g',
     description: "Papas pay tradicionales.",
     tiers: [{ qty: null, price: 4500 }],
-    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+    image: snkCracketPay,
+    pack: true,
   },
   {
     id: 'craker-papas-pay-500',
@@ -531,7 +534,8 @@ export const combos = [
     weight: '500 g',
     description: "Papas pay tradicionales.",
     tiers: [{ qty: null, price: 8900 }],
-    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+    image: snkCracketPay,
+    pack: true,
   },
   {
     id: 'craker-papas-pay-1kg',
@@ -541,7 +545,8 @@ export const combos = [
     weight: '1 kg',
     description: "Papas pay tradicionales, bolsa de un kilo.",
     tiers: [{ qty: null, price: 17900 }],
-    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+    image: snkCracketPay,
+    pack: true,
   },
   {
     id: 'landy-chizitos-1kg',
@@ -557,12 +562,13 @@ export const combos = [
   {
     id: 'landy-palitos-1kg',
     category: 'salados',
-    name: "Palitos Landy 1 kg",
+    name: "Palitos Orita's Landy 1 kg",
     brand: "Landy",
     weight: '1 kg',
-    description: "Palitos salados Landy, bolsa de un kilo.",
+    description: "Palito frito salado extra fino, sabor tradicional.",
     tiers: [{ qty: null, price: 7500 }],
-    image: fotoProximamente, // REEMPLAZAR: falta foto del producto
+    image: snkLandyPalitos,
+    pack: true,
   },
 
   // ─────────────── SALADOS (productos sueltos, precio a consultar) ───────────────
