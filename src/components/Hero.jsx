@@ -5,6 +5,7 @@ import { ArrowIcon, WhatsAppIcon, TruckIcon } from './Icons'
 import { whatsappLink } from '../lib/whatsapp'
 import { categories } from '../data/combos'
 import { site } from '../data/site'
+import { usePointerTilt, useScrollParallax } from '../hooks/useParallax'
 
 /* Texto circular giratorio */
 function SpinBadge() {
@@ -25,8 +26,10 @@ function SpinBadge() {
 }
 
 export default function Hero() {
+  const tiltRef = usePointerTilt()
+  const scrollRef = useScrollParallax()
   return (
-    <section id="inicio" aria-labelledby="hero-title" className="relative overflow-hidden bg-crema pt-[4.5rem]">
+    <section ref={tiltRef} id="inicio" aria-labelledby="hero-title" className="relative overflow-hidden bg-crema pt-[4.5rem]">
       <div aria-hidden="true" className="dots pointer-events-none absolute inset-0 text-navy/[0.05]" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pt-8 pb-20 sm:px-6 sm:pt-12 lg:grid-cols-12 lg:gap-6 lg:px-8 lg:pt-10 lg:pb-24">
@@ -82,12 +85,20 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        {/* Composición de productos */}
-        <div className="relative lg:col-span-6">
+        {/* Composición de productos (capas con parallax de scroll + inclinación con el mouse) */}
+        <div ref={scrollRef} className="relative lg:col-span-6">
           <Reveal delay={150} className="relative mx-auto max-w-xl lg:max-w-none">
-            <div aria-hidden="true" className="absolute inset-x-[4%] top-[6%] bottom-[2%] rotate-3 rounded-[2.5rem] bg-celeste">
-              <div className="dots absolute inset-0 rounded-[2.5rem] text-white/35" />
+           <div className="plx-tilt relative">
+            <div
+              aria-hidden="true"
+              className="plx absolute inset-x-[4%] top-[6%] bottom-[2%]"
+              style={{ '--plx-y': '36px', '--plx-x': '-10px', '--plx-z': '-40px' }}
+            >
+              <div className="absolute inset-0 rotate-3 rounded-[2.5rem] bg-celeste">
+                <div className="dots absolute inset-0 rounded-[2.5rem] text-white/35" />
+              </div>
             </div>
+            <div className="plx relative" style={{ '--plx-y': '-18px', '--plx-x': '12px', '--plx-z': '20px' }}>
             <img
               src={collage}
               alt="Productos de Combo Fiesta: pan de hamburguesa, hamburguesas La Muñeca, salchichas Paladini, ketchup, mayonesa, snacks y congelados"
@@ -97,9 +108,14 @@ export default function Hero() {
               decoding="async"
               className="relative w-full drop-shadow-[0_24px_30px_rgb(23_38_56/0.22)]"
             />
-            <div className="absolute -top-6 -right-1 sm:-right-4">
+            </div>
+            <div
+              className="plx absolute -top-6 -right-1 sm:-right-4"
+              style={{ '--plx-y': '-56px', '--plx-x': '22px', '--plx-z': '70px' }}
+            >
               <SpinBadge />
             </div>
+           </div>
           </Reveal>
         </div>
       </div>

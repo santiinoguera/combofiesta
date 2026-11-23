@@ -152,6 +152,28 @@
     transform: none;
   }
 }
+/* ── Parallax / profundidad (variables escritas por useParallax.js) ──
+   --p: posición de scroll (-1..1) · --mx/--my: mouse (-1..1)
+   Cada capa define cuánto se mueve: --plx-y (scroll), --plx-x (mouse), --plx-z (profundidad) */
+@media (prefers-reduced-motion: no-preference) {
+  .plx {
+    transform: translate3d(
+      calc(var(--mx, 0) * var(--plx-x, 0px)),
+      calc(var(--p, 0) * var(--plx-y, 0px) + var(--my, 0) * var(--plx-x, 0px)),
+      var(--plx-z, 0px)
+    );
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      scale 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: transform;
+  }
+  .plx-tilt {
+    transform: perspective(1400px) rotateX(calc(var(--my, 0) * -4deg)) rotateY(calc(var(--mx, 0) * 5deg));
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .animate-spin-slow, .animate-float, .animate-wiggle, .btn-shine::after, .promo-ribbon::after { animation: none !important; }
